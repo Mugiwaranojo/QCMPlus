@@ -2,7 +2,14 @@
 <resources>
 
     <string name="app_name">QCMPlusStudent</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="app_title">QCM PLUS</string>
+
+    <string name="field_login_hint">Identifiant</string>
+    <string name="field_password_hint">Mot de passe</string>
+    <string name="button_connect">Se connecter</string>
+
+    <string name="myspace_chooseMCQ">Choisir un QCM</string>
+    <string name="myspace_myMCQ">Mes QCM</string>
 </resources>
