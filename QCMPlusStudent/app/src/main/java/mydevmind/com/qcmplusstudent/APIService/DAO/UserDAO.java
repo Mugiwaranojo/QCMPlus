@@ -1,4 +1,4 @@
-package mydevmind.com.qcmplusstudent.APIService.DAO;
+package mydevmind.com.qcmplusstudent.apiService.DAO;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -7,8 +7,8 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-import mydevmind.com.qcmplusstudent.APIService.IAPIServiceResultListener;
-import mydevmind.com.qcmplusstudent.Model.User;
+import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
+import mydevmind.com.qcmplusstudent.model.User;
 
 /**
  * Created by Joan on 29/07/2014.
@@ -44,7 +44,7 @@ public class UserDAO implements IDAO<User> {
     }
 
     public void findByUserPassword(String login, String password, final IAPIServiceResultListener<User> listener){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Player");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
         query.whereEqualTo("login", login);
         query.whereEqualTo("password", password);
         query.whereEqualTo("isAdmin", false);

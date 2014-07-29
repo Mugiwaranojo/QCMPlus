@@ -1,4 +1,4 @@
-package mydevmind.com.qcmplusstudent.Model;
+package mydevmind.com.qcmplusstudent.model;
 
 import java.util.ArrayList;
 import java.util.Date;

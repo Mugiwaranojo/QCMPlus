@@ -1,4 +1,4 @@
-package mydevmind.com.qcmplusstudent.APIService;
+package mydevmind.com.qcmplusstudent.apiService;
 
 /**
  * Created by Joan on 29/07/2014.

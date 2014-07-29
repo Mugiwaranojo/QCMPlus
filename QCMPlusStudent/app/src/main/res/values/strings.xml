@@ -12,4 +12,8 @@
 
     <string name="myspace_chooseMCQ">Choisir un QCM</string>
     <string name="myspace_myMCQ">Mes QCM</string>
+    <string name="login_spinner_title">Connection ...</string>
+    <string name="login_spinner_text">Veuillez patientez, ceci peut prendre quelques seconds.</string>
+    <string name="login_toast_welcom">Bienvenue</string>
+    <string name="login_toast_connection_failed">Identifiant ou mot de passe incorrect.</string>
 </resources>
