@@ -1,14 +1,20 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,6 +24,10 @@ import thomascorfield.fr.qcmplusadmin.R;
 public class MCQListActivity extends Activity {
 
     private ListView listView;
+    private Button addMcqBtn;
+
+    private static final int ACTION_MODIFY = 333;
+    private static final int ACTION_DELETE = 666;
 
     private ArrayList<MCQ> mcqs;
 
@@ -28,31 +38,71 @@ public class MCQListActivity extends Activity {
 
         this.listView = (ListView) findViewById(R.id.listView);
 
-        this.mcqs = MCQ.getAllMCQ(10);
+        this.mcqs = MCQ.getAllMCQ(15);
 
         McqAdapter adapter = new McqAdapter();
 
         this.listView.setAdapter(adapter);
 
+        this.addMcqBtn = (Button) findViewById(R.id.addMcqBtn);
+
+        final Intent addMcqPageIntent;
+        addMcqPageIntent = new Intent(this, MCQSaveActivity.class);
+
+        this.addMcqBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                startActivity(addMcqPageIntent);
+            }
+        });
+
+        View.OnCreateContextMenuListener listener = new View.OnCreateContextMenuListener() {
+
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+                // Cast necessaire dans le contexte d'un ContextMenuListener
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
+
+                MCQ mcqSelected = mcqs.get(info.position);
+
+                menu.setHeaderTitle(mcqSelected.getName());
+                menu.add(Menu.NONE, ACTION_MODIFY, 0, "Modifier");
+                menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
+            }
+        };
+
+        this.listView.setOnCreateContextMenuListener(listener);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.music_list, menu);
-        return true;
-    }*/
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        MCQ musicSelected = mcqs.get(info.position);
+
+        switch (item.getItemId()) {
+
+            case ACTION_MODIFY:
+                //onMusicSelected(musicSelected);
+                Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+                break;
+
+            case ACTION_DELETE:
+                //this.listView.setAdapter(new MusicAdapter(getActivity()));
+                //this.listView.invalidateViews();
+                Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                break;
+
         }
-        return super.onOptionsItemSelected(item);
+
+        return super.onContextItemSelected(item);
     }
 
     private class McqAdapter extends BaseAdapter {
@@ -75,7 +125,7 @@ public class MCQListActivity extends Activity {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            MCQ MCQToDisplay = (MCQ) getItem(i);
+            MCQ mcqToDisplay = (MCQ) getItem(i);
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -84,8 +134,8 @@ public class MCQListActivity extends Activity {
             TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
             TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);
 
-            titleTextView.setText(MCQToDisplay.getName());
-            descriptionTextView.setText(MCQToDisplay.getDescription());
+            titleTextView.setText(mcqToDisplay.getName());
+            descriptionTextView.setText(mcqToDisplay.getDescription());
 
             return cell;
         }

@@ -1,7 +1,6 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,31 +9,25 @@ import android.widget.Button;
 
 import thomascorfield.fr.qcmplusadmin.R;
 
+public class UserSaveActivity extends Activity {
 
-public class MainActivity extends Activity {
-
-    private Button loginBtn;
+    private Button userSaveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_save);
 
-        this.loginBtn = (Button) findViewById(R.id.loginBtn);
+        this.userSaveBtn = (Button) findViewById(R.id.userSaveBtn);
 
-        final Intent showHomePageIntent;
-        showHomePageIntent = new Intent(this, AdminActivity.class);
-
-        this.loginBtn.setOnClickListener(new View.OnClickListener() {
+        this.userSaveBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                startActivity(showHomePageIntent);
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,23 +1,34 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.R;
 
 public class UserListActivity extends Activity {
 
     private ListView listView;
+    private Button addUserBtn;
+
+    private static final int ACTION_MODIFY = 333;
+    private static final int ACTION_DELETE = 666;
 
     private ArrayList<User> users;
 
@@ -26,33 +37,74 @@ public class UserListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
-        this.listView = (ListView) findViewById(R.id.listView);
+        this.users = User.getAllUsers(15);
 
-        this.users = User.getAllUsers(10);
+        this.listView = (ListView) findViewById(R.id.listView);
 
         UserAdapter adapter = new UserAdapter();
 
         this.listView.setAdapter(adapter);
 
+        this.addUserBtn = (Button) findViewById(R.id.addUserBtn);
+
+        final Intent addUserPageIntent;
+        addUserPageIntent = new Intent(this, UserSaveActivity.class);
+
+        this.addUserBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                startActivity(addUserPageIntent);
+            }
+        });
+
+        View.OnCreateContextMenuListener listener = new View.OnCreateContextMenuListener() {
+
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+                // Cast necessaire dans le contexte d'un ContextMenuListener
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
+
+                User userSelected = users.get(info.position);
+
+                menu.setHeaderTitle(userSelected.toString());
+                menu.add(Menu.NONE, ACTION_MODIFY, 0, "Modifier");
+                menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
+            }
+        };
+
+        this.listView.setOnCreateContextMenuListener(listener);
+
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.music_list, menu);
-        return true;
-    }*/
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        User userSelected = users.get(info.position);
+
+        switch (item.getItemId()) {
+
+            case ACTION_MODIFY:
+                //onMusicSelected(musicSelected);
+                Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+                break;
+
+            case ACTION_DELETE:
+                //this.listView.setAdapter(new MusicAdapter(getActivity()));
+               //this.listView.invalidateViews();
+                Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                break;
+
         }
-        return super.onOptionsItemSelected(item);
+
+        return super.onContextItemSelected(item);
     }
 
     private class UserAdapter extends BaseAdapter {

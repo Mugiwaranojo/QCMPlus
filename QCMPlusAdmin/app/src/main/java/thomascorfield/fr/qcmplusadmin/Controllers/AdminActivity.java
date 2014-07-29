@@ -13,38 +13,38 @@ import thomascorfield.fr.qcmplusadmin.R;
 
 public class AdminActivity extends Activity {
 
-    private Button usersPageBtn;
-    private Button mcqPageBtn;
+    private Button userListBtn;
+    private Button mcqListBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        this.usersPageBtn = (Button) findViewById(R.id.usersPageBtn);
-        this.mcqPageBtn = (Button) findViewById(R.id.mcqPageBtn);
+        this.userListBtn = (Button) findViewById(R.id.userListBtn);
+        this.mcqListBtn = (Button) findViewById(R.id.mcqListBtn);
 
-        final Intent showMcqPageIntent;
-        showMcqPageIntent = new Intent(this, MCQActivity.class);
+        final Intent showMcqListIntent;
+        showMcqListIntent = new Intent(this, MCQListActivity.class);
 
-        this.mcqPageBtn.setOnClickListener(new View.OnClickListener(){
+        this.mcqListBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
-                startActivity(showMcqPageIntent);
+                startActivity(showMcqListIntent);
             }
         });
 
-        final Intent showUsersPageIntent;
-        showUsersPageIntent = new Intent(this, UserActivity.class);
+        final Intent showUsersListIntent;
+        showUsersListIntent = new Intent(this, UserListActivity.class);
 
-        this.usersPageBtn.setOnClickListener(new View.OnClickListener(){
+        this.userListBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
-                startActivity(showUsersPageIntent);
+                startActivity(showUsersListIntent);
             }
         });
     }

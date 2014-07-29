@@ -1,7 +1,6 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,31 +9,22 @@ import android.widget.Button;
 
 import thomascorfield.fr.qcmplusadmin.R;
 
+public class MCQSaveActivity extends Activity {
 
-public class MCQActivity extends Activity {
-
-    private Button addMcqBtn;
-    private Button mcqListBtn;
-    private Button questionsPageBtn;
+    private Button mcqSaveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mcq);
+        setContentView(R.layout.activity_mcq_save);
 
-        this.addMcqBtn = (Button) findViewById(R.id.addMcqBtn);
-        this.mcqListBtn = (Button) findViewById(R.id.mcqListBtn);
-        this.questionsPageBtn = (Button) findViewById(R.id.questionsPageBtn);
+        this.mcqSaveBtn = (Button) findViewById(R.id.mcqSaveBtn);
 
-        final Intent showMcqListIntent;
-        showMcqListIntent = new Intent(this, MCQListActivity.class);
-
-        this.mcqListBtn.setOnClickListener(new View.OnClickListener(){
+        this.mcqSaveBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                startActivity(showMcqListIntent);
             }
         });
     }
@@ -58,3 +48,4 @@ public class MCQActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
+

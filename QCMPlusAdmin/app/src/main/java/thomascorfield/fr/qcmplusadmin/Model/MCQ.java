@@ -59,8 +59,8 @@ public class MCQ implements Serializable {
     public static MCQ getDefaultMCQ () {
 
         MCQ m = new MCQ();
-        m.setName("Default MCQ");
-        m.setDescription("Un chouette MCQ");
+        m.setName("QCM par défaut");
+        m.setDescription("Un chouette QCM");
 
         return m;
     }
@@ -72,8 +72,8 @@ public class MCQ implements Serializable {
         for (int i = 0; i < size; i++) {
 
             MCQ m = new MCQ();
-            m.setName("MCQ" + (i + 1));
-            m.setDescription("Un chouette MCQ");
+            m.setName("QCM" + (i + 1));
+            m.setDescription("Un chouette QCM");
 
             list.add(m);
         }
