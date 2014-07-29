@@ -1,11 +1,11 @@
-package mydevmind.com.qcmplusstudent.APIService;
+package mydevmind.com.qcmplusstudent.apiService;
 
 import android.content.Context;
 
 import com.parse.Parse;
 
-import mydevmind.com.qcmplusstudent.APIService.DAO.UserDAO;
-import mydevmind.com.qcmplusstudent.Model.User;
+import mydevmind.com.qcmplusstudent.apiService.dao.UserDAO;
+import mydevmind.com.qcmplusstudent.model.User;
 
 /**
  * Created by Joan on 29/07/2014.
@@ -13,8 +13,8 @@ import mydevmind.com.qcmplusstudent.Model.User;
 public class MCQServiceManager {
 
 
-    private static final String APP_ID="4UNxW53O9e42UjNxLaGma5foAtZQpE22H2IwZ9y3";
-    private static final String CLIENT_KEY="zqk5C0BKHuWmSaIrSfuWFVyH4MRlAd7g3iY9uUCg";
+    private static final String APP_ID="1XpHvksxkUpokKjgKINeQuzwCUAAkyFpwRHBZTz3";
+    private static final String CLIENT_KEY="pJFS5zqqaBKosNs69n1MQxV8kVSta0y3c0NrRUJW";
 
     private Context context;
     private static MCQServiceManager instance;

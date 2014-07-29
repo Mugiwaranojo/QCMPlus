@@ -1,6 +1,6 @@
-package mydevmind.com.qcmplusstudent.APIService.DAO;
+package mydevmind.com.qcmplusstudent.apiService.dao;
 
-import mydevmind.com.qcmplusstudent.APIService.IAPIServiceResultListener;
+import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 
 /**
  * Created by Joan on 29/07/2014.
