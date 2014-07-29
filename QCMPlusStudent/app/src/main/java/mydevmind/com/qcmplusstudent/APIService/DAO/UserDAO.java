@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package mydevmind.com.qcmplusstudent.APIService.DAO;
+=======
+package mydevmind.com.qcmplusstudent.apiService.dao;
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -7,8 +11,13 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import mydevmind.com.qcmplusstudent.APIService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.Model.User;
+=======
+import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
+import mydevmind.com.qcmplusstudent.model.User;
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
 
 /**
  * Created by Joan on 29/07/2014.
@@ -44,6 +53,7 @@ public class UserDAO implements IDAO<User> {
     }
 
     public void findByUserPassword(String login, String password, final IAPIServiceResultListener<User> listener){
+<<<<<<< HEAD
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Player");
         query.whereEqualTo("login", login);
         query.whereEqualTo("password", password);
@@ -54,6 +64,22 @@ public class UserDAO implements IDAO<User> {
                 if(parseObjects.size()==1){
                     listener.onApiResultListener(parseObjectToUser(parseObjects.get(0)), e);
                 }else{
+=======
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        query.whereEqualTo("login", login);
+        query.whereEqualTo("password", password);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e==null) {
+                    if (parseObjects.size() == 1) {
+                        listener.onApiResultListener(parseObjectToUser(parseObjects.get(0)), e);
+                    } else {
+                        listener.onApiResultListener(null, null);
+                    }
+                }else{
+                    e.printStackTrace();
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
                     listener.onApiResultListener(null, e);
                 }
             }
