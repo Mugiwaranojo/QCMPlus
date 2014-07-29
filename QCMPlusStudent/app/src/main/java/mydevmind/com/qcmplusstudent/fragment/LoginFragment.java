@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 
+import mydevmind.com.qcmplusstudent.MainActivity;
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.apiService.MCQServiceManager;
 import mydevmind.com.qcmplusstudent.model.User;
@@ -23,6 +24,12 @@ import mydevmind.com.qcmplusstudent.R;
 public class LoginFragment extends Fragment implements IAPIServiceResultListener<User>{
 
     private EditText loginField, passwordField;
+
+    private IFragmentActionListener listener;
+
+    public void setListener(IFragmentActionListener listener) {
+        this.listener = listener;
+    }
 
     private MCQServiceManager manager;
     private ProgressDialog spinner;
@@ -58,6 +65,8 @@ public class LoginFragment extends Fragment implements IAPIServiceResultListener
         spinner.dismiss();
         if(obj!=null) {
             Toast.makeText(getActivity().getApplicationContext(), getString(R.string.login_toast_welcom) + " " + obj.getFirstname(), Toast.LENGTH_SHORT).show();
+            manager.setCurrentUser(obj);
+            listener.onFragmentAction(MainActivity.ACTION_CONNECT, obj);
         }else {
             Toast.makeText(getActivity().getApplicationContext(), getString(R.string.login_toast_connection_failed), Toast.LENGTH_SHORT).show();
         }

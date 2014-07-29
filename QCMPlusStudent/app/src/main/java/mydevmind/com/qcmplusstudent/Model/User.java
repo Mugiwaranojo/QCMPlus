@@ -16,6 +16,13 @@ public class User implements Serializable {
     private Date createdAt;
     private Date updatedAt;
 
+    public User(){
+
+    }
+
+    public User(String objectId){
+        this.objectId= objectId;
+    }
     public String getObjectId() {
         return objectId;
     }
