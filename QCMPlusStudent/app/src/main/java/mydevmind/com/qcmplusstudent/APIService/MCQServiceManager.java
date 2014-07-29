@@ -1,11 +1,29 @@
+<<<<<<< HEAD
 package mydevmind.com.qcmplusstudent.APIService;
+=======
+<<<<<<< HEAD
+package mydevmind.com.qcmplusstudent.APIService;
+=======
+package mydevmind.com.qcmplusstudent.apiService;
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
+>>>>>>> 8a7fb4f6a24358192bc2fbeb25c5e02d91ae7ed6
 
 import android.content.Context;
 
 import com.parse.Parse;
 
+<<<<<<< HEAD
 import mydevmind.com.qcmplusstudent.APIService.DAO.UserDAO;
 import mydevmind.com.qcmplusstudent.Model.User;
+=======
+<<<<<<< HEAD
+import mydevmind.com.qcmplusstudent.APIService.DAO.UserDAO;
+import mydevmind.com.qcmplusstudent.Model.User;
+=======
+import mydevmind.com.qcmplusstudent.apiService.dao.UserDAO;
+import mydevmind.com.qcmplusstudent.model.User;
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
+>>>>>>> 8a7fb4f6a24358192bc2fbeb25c5e02d91ae7ed6
 
 /**
  * Created by Joan on 29/07/2014.
@@ -13,8 +31,18 @@ import mydevmind.com.qcmplusstudent.Model.User;
 public class MCQServiceManager {
 
 
+<<<<<<< HEAD
     private static final String APP_ID="4UNxW53O9e42UjNxLaGma5foAtZQpE22H2IwZ9y3";
     private static final String CLIENT_KEY="zqk5C0BKHuWmSaIrSfuWFVyH4MRlAd7g3iY9uUCg";
+=======
+<<<<<<< HEAD
+    private static final String APP_ID="4UNxW53O9e42UjNxLaGma5foAtZQpE22H2IwZ9y3";
+    private static final String CLIENT_KEY="zqk5C0BKHuWmSaIrSfuWFVyH4MRlAd7g3iY9uUCg";
+=======
+    private static final String APP_ID="1XpHvksxkUpokKjgKINeQuzwCUAAkyFpwRHBZTz3";
+    private static final String CLIENT_KEY="pJFS5zqqaBKosNs69n1MQxV8kVSta0y3c0NrRUJW";
+>>>>>>> 6b1dce2db8498084639cd0557e0db57879a85655
+>>>>>>> 8a7fb4f6a24358192bc2fbeb25c5e02d91ae7ed6
 
     private Context context;
     private static MCQServiceManager instance;
