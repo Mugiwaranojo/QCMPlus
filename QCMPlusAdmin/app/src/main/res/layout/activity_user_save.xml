@@ -5,7 +5,7 @@
     android:background="#4BC0C6">
 
     <TextView
-        android:text="Ajouter/Modifier un stagiaire"
+        android:text="Ajouter/Modifier un utilisateur"
         android:gravity="center"
         android:layout_width="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"

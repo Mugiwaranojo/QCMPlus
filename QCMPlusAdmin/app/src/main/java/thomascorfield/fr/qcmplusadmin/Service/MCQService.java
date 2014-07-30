@@ -48,4 +48,23 @@ public class MCQService {
             }
         });
     }
+
+    public void getAllUsers(String username, String password, final OnConnectionResultListener listener) {
+
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+
+                if(e != null) {
+
+                    listener.onConnectionError(e);
+
+                } else {
+
+                    listener.onConnectionSuccess();
+                }
+            }
+        });
+    }
 }

@@ -47,17 +47,7 @@ public class UserSaveActivity extends Activity {
         intent = getIntent();
         currentUser  = (User) intent.getSerializableExtra("User");
 
-        if (currentUser.getLastname() != null) {
-
-            this.editTextLastname.setText(currentUser.getLastname());
-            this.editTextFirstname.setText(currentUser.getFirstname());
-            this.editTextLogin.setText(currentUser.getLogin());
-            this.editTextPassword.setText(currentUser.getPassword());
-            this.editTextCompany.setText(currentUser.getCompany());
-            this.adminNoRadioBtn.setChecked(!currentUser.isAdmin());
-            this.adminYesRadioBtn.setChecked(currentUser.isAdmin());
-
-        } else {
+        if (currentUser.getLastname() == null) {
 
             this.editTextLastname.setText("");
             this.editTextFirstname.setText("");
@@ -66,6 +56,16 @@ public class UserSaveActivity extends Activity {
             this.editTextCompany.setText("");
             this.adminNoRadioBtn.setChecked(true);
             this.adminYesRadioBtn.setChecked(false);
+
+        } else {
+
+            this.editTextLastname.setText(currentUser.getLastname());
+            this.editTextFirstname.setText(currentUser.getFirstname());
+            this.editTextLogin.setText(currentUser.getLogin());
+            this.editTextPassword.setText(currentUser.getPassword());
+            this.editTextCompany.setText(currentUser.getCompany());
+            this.adminNoRadioBtn.setChecked(!currentUser.isAdmin());
+            this.adminYesRadioBtn.setChecked(currentUser.isAdmin());
         }
 
         this.userSaveBtn = (Button) findViewById(R.id.userSaveBtn);
