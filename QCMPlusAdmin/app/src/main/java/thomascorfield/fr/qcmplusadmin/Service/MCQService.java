@@ -9,8 +9,8 @@ import com.parse.Parse;
 
 public class MCQService {
 
-    private String API_KEY = "";
-    private String CLIENT_KEY = "";
+    private String API_KEY = "Z4Jxdk8TR8piZ2SLUGtdi6VDAoRI3qVx6NVB7YlW";
+    private String CLIENT_KEY = "GL0hetM0cEen5fhjvkx6LUxjkin4lKNb1llNnnDy";
 
     private static MCQService sInstance;
 

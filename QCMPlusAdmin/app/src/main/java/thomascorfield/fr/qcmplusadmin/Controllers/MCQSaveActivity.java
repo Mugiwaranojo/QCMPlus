@@ -1,25 +1,50 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.R;
 
 public class MCQSaveActivity extends Activity {
 
+    private EditText editTextTitle;
+    private EditText editTextDescription;
+
     private Button mcqSaveBtn;
+
+    private Intent intent;
+    private MCQ currentMcq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mcq_save);
 
-        this.mcqSaveBtn = (Button) findViewById(R.id.mcqSaveBtn);
+        this.editTextTitle = (EditText) findViewById(R.id.editTextName);
+        this.editTextDescription = (EditText) findViewById(R.id.editTextDescription);
 
+        intent = getIntent();
+        currentMcq  = (MCQ) intent.getSerializableExtra("MCQ");
+
+        if (currentMcq.getName() != null) {
+
+            this.editTextTitle.setText(currentMcq.getName());
+            this.editTextDescription.setText(currentMcq.getDescription());
+
+        } else {
+
+            this.editTextTitle.setText("");
+            this.editTextDescription.setText("");
+        }
+
+        this.mcqSaveBtn = (Button) findViewById(R.id.mcqSaveBtn);
         this.mcqSaveBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

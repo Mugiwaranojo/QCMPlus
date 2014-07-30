@@ -32,6 +32,8 @@ public class UserListActivity extends Activity {
 
     private ArrayList<User> users;
 
+    private Intent addUserPageIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +42,18 @@ public class UserListActivity extends Activity {
         this.users = User.getAllUsers(15);
 
         this.listView = (ListView) findViewById(R.id.listView);
-
         UserAdapter adapter = new UserAdapter();
-
         this.listView.setAdapter(adapter);
 
+        this.addUserPageIntent = new Intent(this, UserSaveActivity.class);
+
         this.addUserBtn = (Button) findViewById(R.id.addUserBtn);
-
-        final Intent addUserPageIntent;
-        addUserPageIntent = new Intent(this, UserSaveActivity.class);
-
         this.addUserBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
+                addUserPageIntent.putExtra("User", new User());
                 startActivity(addUserPageIntent);
             }
         });
@@ -89,8 +88,10 @@ public class UserListActivity extends Activity {
         switch (item.getItemId()) {
 
             case ACTION_MODIFY:
-                //onMusicSelected(musicSelected);
-                Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+
+                addUserPageIntent.putExtra("User", userSelected);
+                startActivity(addUserPageIntent);
+                //Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
                 break;
 
             case ACTION_DELETE:
@@ -131,13 +132,13 @@ public class UserListActivity extends Activity {
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-            View cell = inflater.inflate(R.layout.user_list_cell, null);
+            View cell = inflater.inflate(R.layout.layout_list_cell, null);
 
             TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
-            TextView companyTextView = (TextView) cell.findViewById(R.id.companyTextView);
+            TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);
 
             titleTextView.setText(userToDisplay.toString());
-            companyTextView.setText(userToDisplay.getCompany());
+            descriptionTextView.setText(userToDisplay.getCompany());
 
             return cell;
         }

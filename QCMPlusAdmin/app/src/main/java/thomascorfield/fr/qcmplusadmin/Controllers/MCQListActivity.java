@@ -31,29 +31,28 @@ public class MCQListActivity extends Activity {
 
     private ArrayList<MCQ> mcqs;
 
+    private Intent addMcqPageIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mcq_list);
 
-        this.listView = (ListView) findViewById(R.id.listView);
-
         this.mcqs = MCQ.getAllMCQ(15);
 
+        this.listView = (ListView) findViewById(R.id.listView);
         McqAdapter adapter = new McqAdapter();
-
         this.listView.setAdapter(adapter);
 
+        this.addMcqPageIntent = new Intent(this, MCQSaveActivity.class);
+
         this.addMcqBtn = (Button) findViewById(R.id.addMcqBtn);
-
-        final Intent addMcqPageIntent;
-        addMcqPageIntent = new Intent(this, MCQSaveActivity.class);
-
         this.addMcqBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
+                addMcqPageIntent.putExtra("MCQ", new MCQ());
                 startActivity(addMcqPageIntent);
             }
         });
@@ -82,13 +81,15 @@ public class MCQListActivity extends Activity {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        MCQ musicSelected = mcqs.get(info.position);
+        MCQ mcqSelected = mcqs.get(info.position);
 
         switch (item.getItemId()) {
 
             case ACTION_MODIFY:
-                //onMusicSelected(musicSelected);
-                Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+
+                addMcqPageIntent.putExtra("MCQ", mcqSelected);
+                startActivity(addMcqPageIntent);
+                //Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
                 break;
 
             case ACTION_DELETE:
@@ -129,7 +130,7 @@ public class MCQListActivity extends Activity {
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-            View cell = inflater.inflate(R.layout.mcq_list_cell, null);
+            View cell = inflater.inflate(R.layout.layout_list_cell, null);
 
             TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
             TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);

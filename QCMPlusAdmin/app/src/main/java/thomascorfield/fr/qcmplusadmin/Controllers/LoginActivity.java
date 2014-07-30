@@ -36,7 +36,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, OnC
     @Override
     public void onClick(View view) {
 
-        String user = this.loginEditText.getText().toString();
+        /*String user = this.loginEditText.getText().toString();
         String password = this.passwordEditText.getText().toString();
 
         MCQService service = MCQService.getInstance(this);
@@ -48,13 +48,17 @@ public class LoginActivity extends Activity implements View.OnClickListener, OnC
         spinner.setTitle("Connexion ...");
         spinner.setCancelable(false);
 
-        spinner.show();
+        spinner.show();*/
+
+        Intent showAdminPageIntent = new Intent(this, AdminActivity.class);
+
+        startActivity(showAdminPageIntent);
     }
 
     @Override
     public void onConnectionSuccess() {
 
-        spinner.dismiss();
+        //spinner.dismiss();
 
         Intent showAdminPageIntent = new Intent(this, AdminActivity.class);
 

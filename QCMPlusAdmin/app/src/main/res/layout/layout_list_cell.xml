@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="">
+    android:background="@android:color/white"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,16 +16,18 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="MCQ 1"
+            android:id="@+id/titleTextView"
+            android:textColor="#2F7C80"
+            android:text="Title Text"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:id="@+id/titleTextView"/>
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Un chouette QCM"
-            android:textSize="15sp"
-            android:id="@+id/descriptionTextView"/>
+            android:id="@+id/descriptionTextView"
+            android:text="Description Text"
+            android:textColor="#2F7C80"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
