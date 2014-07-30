@@ -53,7 +53,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, IAP
         spinner.setCancelable(false);
         spinner.show();
 
-        serviceManager.connect(user, password);
+        serviceManager.connect("tcorfield", "1234");
     }
 
     @Override
