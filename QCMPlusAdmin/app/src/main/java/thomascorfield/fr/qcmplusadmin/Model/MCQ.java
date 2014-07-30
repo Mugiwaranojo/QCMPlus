@@ -2,33 +2,21 @@ package thomascorfield.fr.qcmplusadmin.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MCQ implements Serializable {
 
-    private String objectId;
+    private String identifier;
     private String name;
     private String description;
     private ArrayList<Question> questions;
     private ArrayList<UserMCQ> usermcqs;
-    private Date createdAt;
-    private Date updatedAt;
 
-
-    public MCQ(){
-
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public MCQ(String objectId){
-        this.objectId= objectId;
-    }
-
-    public String getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getDescription() {
@@ -63,22 +51,6 @@ public class MCQ implements Serializable {
         this.name = name;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
         return name;
@@ -87,8 +59,8 @@ public class MCQ implements Serializable {
     public static MCQ getDefaultMCQ () {
 
         MCQ m = new MCQ();
-        m.setName("Default MCQ");
-        m.setDescription("Un chouette MCQ");
+        m.setName("QCM par défaut");
+        m.setDescription("Un chouette QCM");
 
         return m;
     }
@@ -100,8 +72,8 @@ public class MCQ implements Serializable {
         for (int i = 0; i < size; i++) {
 
             MCQ m = new MCQ();
-            m.setName("MCQ" + (i + 1));
-            m.setDescription("Un chouette MCQ");
+            m.setName("QCM" + (i + 1));
+            m.setDescription("Un chouette QCM");
 
             list.add(m);
         }
