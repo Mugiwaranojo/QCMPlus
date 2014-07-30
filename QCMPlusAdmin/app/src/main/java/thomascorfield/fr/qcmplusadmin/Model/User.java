@@ -128,7 +128,10 @@ public class User implements Serializable {
             User u = new User();
             u.setFirstname("Firstname" + (i + 1));
             u.setLastname("Lastname" + (i + 1));
+            u.setLogin("Login" + (i + 1));
+            u.setPassword("Password" + (i + 1));
             u.setCompany("TCS Alti");
+            u.setAdmin(true);
 
             list.add(u);
         }
