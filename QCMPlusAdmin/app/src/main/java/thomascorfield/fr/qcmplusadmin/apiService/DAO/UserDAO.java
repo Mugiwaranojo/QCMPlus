@@ -5,6 +5,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
@@ -56,6 +57,21 @@ public class UserDAO implements IDAO<User> {
                 }else{
                     listener.onApiResultListener(null, e);
                 }
+            }
+        });
+    }
+
+    public void fetchAllUser(final IAPIServiceResultListener<ArrayList<User>> listener){
+        final ArrayList<User> userArrayList= new ArrayList<User>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        query.whereEqualTo("isAdmin", false);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                for (ParseObject pUser: parseObjects){
+                    userArrayList.add(parseObjectToUser(pUser));
+                }
+                listener.onApiResultListener(userArrayList, e);
             }
         });
     }
