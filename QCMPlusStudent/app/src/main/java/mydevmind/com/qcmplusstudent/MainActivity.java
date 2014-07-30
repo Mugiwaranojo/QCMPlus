@@ -9,22 +9,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import mydevmind.com.qcmplusstudent.fragment.IFragmentActionListener;
 import mydevmind.com.qcmplusstudent.fragment.LoginFragment;
+import mydevmind.com.qcmplusstudent.fragment.MainFragment;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IFragmentActionListener{
+
+    public static final Integer ACTION_CONNECT=1905;
+
+    private LoginFragment loginFragment;
+    private MainFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
+            loginFragment= new LoginFragment();
+            loginFragment.setListener(this);
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new LoginFragment())
+                    .add(R.id.container, loginFragment)
                     .commit();
         }
     }
 
+    @Override
+    public void onFragmentAction(Integer action, Object obj) {
+        if(action.equals(ACTION_CONNECT)){
+            if(mainFragment==null){
+                mainFragment= new MainFragment();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mainFragment)
+                        .commit();
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,4 +64,6 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

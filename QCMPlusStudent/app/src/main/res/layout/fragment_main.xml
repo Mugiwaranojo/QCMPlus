@@ -33,7 +33,9 @@
         android:background="@android:color/white"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:id="@+id/LinearLayoutAllMCQ">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,8 +44,6 @@
             android:text="@string/myspace_chooseMCQ"
             android:textColor="#5C4875"
             android:id="@+id/textViewChooseMCQ" />
-
-        <UIBarButtonItem></UIBarButtonItem>
     </LinearLayout>
 
     <TextView
@@ -58,7 +58,8 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/listViewMyMCQ" />
 
 </LinearLayout>
