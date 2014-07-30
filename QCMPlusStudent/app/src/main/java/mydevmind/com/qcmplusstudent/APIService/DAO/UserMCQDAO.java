@@ -50,14 +50,17 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
         ParseObject pUser = ParseObject.createWithoutData("User", user.getObjectId());
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserMCQ");
         query.whereEqualTo("user", pUser);
-        query.include("User");
-        query.include("MCQ");
+        query.include("mcq");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 ArrayList<UserMCQ> userMCQArrayList= new ArrayList<UserMCQ>();
                 for(ParseObject object: parseObjects){
-                    userMCQArrayList.add(parseObjectToUserMCQ(object));
+                    try {
+                        userMCQArrayList.add(parseObjectToUserMCQRelations(object, false));
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 listener.onApiResultListener(userMCQArrayList, e);
             }
@@ -69,5 +72,16 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
         userMCQ.setUser(new User(pObject.getParseObject("user").getObjectId()));
         userMCQ.setMcq(new MCQ(pObject.getParseObject("mcq").getObjectId()));
         return userMCQ;
+    }
+
+    public static UserMCQ parseObjectToUserMCQRelations(ParseObject pObject, boolean withUser) throws ParseException {
+        UserMCQ userMCQ= parseObjectToUserMCQ(pObject);
+        if(withUser) {
+            userMCQ.setUser(UserDAO.parseObjectToUser(pObject.fetchIfNeeded()));
+        }else {
+            MCQ mcq= MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded());
+            userMCQ.setMcq(mcq);
+        }
+        return  userMCQ;
     }
 }

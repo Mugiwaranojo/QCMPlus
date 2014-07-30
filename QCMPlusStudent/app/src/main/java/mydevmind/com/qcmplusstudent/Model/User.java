@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String password;
     private String company;
     private boolean isAdmin;
+    private ArrayList<UserMCQ> userMCQs;
     private Date createdAt;
     private Date updatedAt;
 
@@ -77,6 +78,14 @@ public class User implements Serializable {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public ArrayList<UserMCQ> getUserMCQs() {
+        return userMCQs;
+    }
+
+    public void setUserMCQs(ArrayList<UserMCQ> userMCQs) {
+        this.userMCQs = userMCQs;
     }
 
     public Date getCreatedAt() {

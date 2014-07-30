@@ -69,13 +69,10 @@ public class MCQServiceManager {
             @Override
             public void onApiResultListener(ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
                 for(UserMCQ userMCQ: userMCQArrayList){
-                    MCQDAO.getInstance().find(userMCQ.getMcq(), new IAPIServiceResultListener<MCQ>() {
-                        @Override
-                        public void onApiResultListener(MCQ obj, ParseException e) {
-                            mcqArrayList.add(obj);
-                        }
-                    });
+                    mcqArrayList.add(userMCQ.getMcq());
                 }
+                getCurrentUser().setUserMCQs(userMCQArrayList);
+                listMCQListener.onApiResultListener(mcqArrayList, e);
             }
         });
     }

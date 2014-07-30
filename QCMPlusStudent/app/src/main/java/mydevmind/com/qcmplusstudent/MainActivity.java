@@ -27,6 +27,7 @@ public class MainActivity extends Activity implements IFragmentActionListener{
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             loginFragment= new LoginFragment();
+            loginFragment.setListener(this);
             getFragmentManager().beginTransaction()
                     .add(R.id.container, loginFragment)
                     .commit();

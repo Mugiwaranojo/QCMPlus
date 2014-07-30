@@ -60,7 +60,7 @@ public class UserDAO implements IDAO<User> {
         });
     }
 
-    public User parseObjectToUser(ParseObject pUser){
+    public static User parseObjectToUser(ParseObject pUser){
         User user= new User();
         user.setObjectId(pUser.getObjectId());
         user.setFirstname(pUser.getString("firstname"));

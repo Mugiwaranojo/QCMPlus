@@ -57,6 +57,22 @@ public class MCQDAO implements IDAO<MCQ> {
         });
     }
 
+    public MCQ find(String objectId){
+        try {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("MCQ");
+            query.whereEqualTo("objectId", objectId);
+            List<ParseObject> results= query.find();
+            if(results.size()==1){
+                return parseObjectToMCQ(results.get(0));
+            }else{
+                return null;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static MCQ parseObjectToMCQ(ParseObject pMCQ){
         MCQ mcq= new MCQ(pMCQ.getObjectId());
         mcq.setName(pMCQ.getString("name"));
