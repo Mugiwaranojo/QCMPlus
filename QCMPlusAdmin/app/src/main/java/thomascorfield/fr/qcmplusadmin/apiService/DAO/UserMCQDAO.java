@@ -1,4 +1,4 @@
-package mydevmind.com.qcmplusstudent.apiService.DAO;
+package thomascorfield.fr.qcmplusadmin.apiService.DAO;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -8,10 +8,10 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
-import mydevmind.com.qcmplusstudent.model.MCQ;
-import mydevmind.com.qcmplusstudent.model.User;
-import mydevmind.com.qcmplusstudent.model.UserMCQ;
+import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
+import thomascorfield.fr.qcmplusadmin.Model.MCQ;
+import thomascorfield.fr.qcmplusadmin.Model.User;
+import thomascorfield.fr.qcmplusadmin.Model.UserMCQ;
 
 /**
  * Created by Joan on 29/07/2014.
