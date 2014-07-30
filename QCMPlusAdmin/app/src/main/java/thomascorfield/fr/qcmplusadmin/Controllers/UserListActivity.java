@@ -16,13 +16,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+
 import java.util.ArrayList;
 
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.Service.MCQService;
+import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
+import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
-public class UserListActivity extends Activity {
+public class UserListActivity extends Activity  implements IAPIServiceResultListener<ArrayList<User>>{
 
     private ListView listView;
     private Button addUserBtn;
@@ -39,11 +44,7 @@ public class UserListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
-        this.users = User.getAllUsers(15);
-
         this.listView = (ListView) findViewById(R.id.listView);
-        UserAdapter adapter = new UserAdapter();
-        this.listView.setAdapter(adapter);
 
         this.addUserPageIntent = new Intent(this, UserSaveActivity.class);
 
@@ -73,9 +74,17 @@ public class UserListActivity extends Activity {
                 menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
             }
         };
-
         this.listView.setOnCreateContextMenuListener(listener);
+        MCQServiceManager.getInstance(this).setUserListListener(this);
+        MCQServiceManager.getInstance(this).fetchAllUser();
+    }
 
+    @Override
+    public void onApiResultListener(ArrayList<User> obj, ParseException e) {
+        users= obj;
+        UserAdapter adapter = new UserAdapter();
+        this.listView.setAdapter(adapter);
+        listView.invalidate();
     }
 
     @Override
@@ -107,6 +116,8 @@ public class UserListActivity extends Activity {
 
         return super.onContextItemSelected(item);
     }
+
+
 
     private class UserAdapter extends BaseAdapter {
 

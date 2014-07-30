@@ -75,4 +75,15 @@ public class MCQServiceManager {
             }
         });
     }
+
+
+    private IAPIServiceResultListener<ArrayList<User>> userListListener;
+
+    public void setUserListListener(IAPIServiceResultListener<ArrayList<User>> userListListener) {
+        this.userListListener = userListListener;
+    }
+
+    public void fetchAllUser(){
+        UserDAO.getInstance().fetchAllUser(userListListener);
+    }
 }
