@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C05046">
+
+    <TextView
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:layout_height="0dp"
+        android:layout_weight="35"/>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Identifiant"
+            android:ems="10"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/white"
+            android:id="@+id/editTextConnectLogin"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Mot de passe"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:id="@+id/editTextConnectPassword" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connexion"
+            android:id="@+id/buttonConnect"
+            android:background="#9C4038"
+            android:textColor="@android:color/white"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8064A2">
+
+    <TextView
+        android:text="Espace Administrateur"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:layout_height="0dp"
+        android:layout_weight="35"/>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gestion des stagiaires"
+            android:id="@+id/userListBtn"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:background="#5C4875"
+            android:padding="10dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gestion des questionnaires"
+            android:id="@+id/mcqListBtn"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:background="#5C4875"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
