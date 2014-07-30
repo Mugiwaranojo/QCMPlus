@@ -1,30 +1,36 @@
 package thomascorfield.fr.qcmplusadmin.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
-import java.util.ArrayList;
-
-import thomascorfield.fr.qcmplusadmin.Model.User;
-import thomascorfield.fr.qcmplusadmin.Model.UserAnswer;
 
 public class UserMCQ {
 
-    private String identifier;
+    private String objectId;
+    private User user;
+    private MCQ mcq;
     private Timer timeSpent;
     private Integer score;
+    private ArrayList<UserAnswer> userAnswers;
     private Date dateCreated;
     private Date dateUpdated;
-    private ArrayList<UserAnswer> userAnswers;
-    private User user;
+
+    public UserMCQ(){
+
+    }
+
+    public UserMCQ(String objectId){
+        this.objectId= objectId;
+    }
 
     public enum state {};
 
-    public String getIdentifier() {
-        return identifier;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public Timer getTimeSpent() {
@@ -73,5 +79,13 @@ public class UserMCQ {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public MCQ getMcq() {
+        return mcq;
+    }
+
+    public void setMcq(MCQ mcq) {
+        this.mcq = mcq;
     }
 }

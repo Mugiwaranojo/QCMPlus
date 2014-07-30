@@ -47,7 +47,7 @@ public class UserDAO implements IDAO<User> {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
         query.whereEqualTo("login", login);
         query.whereEqualTo("password", password);
-        query.whereEqualTo("isAdmin", false);
+        query.whereEqualTo("isAdmin", true);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
