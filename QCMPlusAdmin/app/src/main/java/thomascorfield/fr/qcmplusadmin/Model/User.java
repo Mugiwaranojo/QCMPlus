@@ -2,23 +2,34 @@ package thomascorfield.fr.qcmplusadmin.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class User implements Serializable {
 
-    private String identifier;
+    private String objectId;
     private String firstname;
     private String lastname;
     private String login;
     private String password;
     private String company;
     private boolean isAdmin;
+    private ArrayList<UserMCQ> userMCQs;
+    private Date createdAt;
+    private Date updatedAt;
 
-    public String getIdentifier() {
-        return identifier;
+    public User(){
+
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public User(String objectId){
+        this.objectId= objectId;
+    }
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String identifier) {
+        this.objectId = identifier;
     }
 
     public String getFirstname() {
@@ -69,6 +80,30 @@ public class User implements Serializable {
         this.isAdmin = isAdmin;
     }
 
+    public ArrayList<UserMCQ> getUserMCQs() {
+        return userMCQs;
+    }
+
+    public void setUserMCQs(ArrayList<UserMCQ> userMCQs) {
+        this.userMCQs = userMCQs;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return firstname + " " + lastname;
@@ -93,10 +128,7 @@ public class User implements Serializable {
             User u = new User();
             u.setFirstname("Firstname" + (i + 1));
             u.setLastname("Lastname" + (i + 1));
-            u.setLogin("Login" + (i + 1));
-            u.setPassword("Password" + (i + 1));
             u.setCompany("TCS Alti");
-            u.setAdmin(true);
 
             list.add(u);
         }
