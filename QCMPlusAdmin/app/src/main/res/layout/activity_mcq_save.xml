@@ -53,14 +53,20 @@
                 android:text="Description"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="40"/>
+                android:layout_width="fill_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="0dp"
-                android:layout_weight="60"
+                android:layout_width="fill_parent"
                 android:layout_margin="5dp"
-                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:layout_height="10dp"
                 android:background="@android:color/white"
                 android:id="@+id/editTextDescription" />
 

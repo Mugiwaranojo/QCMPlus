@@ -107,6 +107,7 @@
                 android:layout_weight="60"
                 android:layout_margin="5dp"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:background="@android:color/white"
                 android:id="@+id/editTextPassword" />
 
