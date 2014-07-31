@@ -1,5 +1,7 @@
 package thomascorfield.fr.qcmplusadmin.apiService.DAO;
 
+import android.text.format.Time;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -7,7 +9,9 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
+import thomascorfield.fr.qcmplusadmin.Model.Question;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.Model.User;
@@ -71,6 +75,12 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
         UserMCQ userMCQ= new UserMCQ(pObject.getObjectId());
         userMCQ.setUser(new User(pObject.getParseObject("user").getObjectId()));
         userMCQ.setMcq(new MCQ(pObject.getParseObject("mcq").getObjectId()));
+        userMCQ.setState(pObject.getString("state"));
+        Time timeSpent= new Time();
+        timeSpent.set((Integer) pObject.getNumber("timeSpent"),0,0,0,0,0);
+        userMCQ.setTimeSpent(timeSpent);
+        userMCQ.setDateCreated(pObject.getCreatedAt());
+        userMCQ.setDateUpdated(pObject.getUpdatedAt());
         return userMCQ;
     }
 
@@ -81,6 +91,8 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
             userMCQ.setUser(user);
         }else {
             MCQ mcq= MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded());
+            ArrayList<Question> questions= QuestionDAO.getInstance().findByMQC(mcq);
+            mcq.setQuestions(questions);
             userMCQ.setMcq(mcq);
         }
         return  userMCQ;

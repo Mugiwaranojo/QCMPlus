@@ -10,7 +10,6 @@ public class MCQ implements Serializable {
     private String name;
     private String description;
     private ArrayList<Question> questions;
-    private ArrayList<UserMCQ> usermcqs;
     private Date createdAt;
     private Date updatedAt;
 
@@ -47,14 +46,6 @@ public class MCQ implements Serializable {
         this.questions = questions;
     }
 
-    public ArrayList<UserMCQ> getUsermcqs() {
-        return usermcqs;
-    }
-
-    public void setUsermcqs(ArrayList<UserMCQ> usermcqs) {
-        this.usermcqs = usermcqs;
-    }
-
     public String getName() {
         return name;
     }
@@ -84,28 +75,4 @@ public class MCQ implements Serializable {
         return name;
     }
 
-    public static MCQ getDefaultMCQ () {
-
-        MCQ m = new MCQ();
-        m.setName("Default MCQ");
-        m.setDescription("Un chouette MCQ");
-
-        return m;
-    }
-
-    public static ArrayList<MCQ> getAllMCQ (int size) {
-
-        ArrayList<MCQ> list = new ArrayList<MCQ>();
-
-        for (int i = 0; i < size; i++) {
-
-            MCQ m = new MCQ();
-            m.setName("MCQ" + (i + 1));
-            m.setDescription("Un chouette MCQ");
-
-            list.add(m);
-        }
-
-        return list;
-    }
 }

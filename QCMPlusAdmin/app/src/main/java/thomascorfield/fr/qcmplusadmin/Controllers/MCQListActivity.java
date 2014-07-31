@@ -38,7 +38,7 @@ public class MCQListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mcq_list);
 
-        this.mcqs = MCQ.getAllMCQ(15);
+        this.mcqs = new ArrayList<MCQ>();
 
         this.listView = (ListView) findViewById(R.id.listView);
         McqAdapter adapter = new McqAdapter();

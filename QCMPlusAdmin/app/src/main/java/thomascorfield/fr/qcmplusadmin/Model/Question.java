@@ -1,20 +1,24 @@
 package thomascorfield.fr.qcmplusadmin.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
 
-    private String identifier;
+    private String objectId;
     private String statement;
     private ArrayList<Option> options;
-    private UserAnswer userAnswer;
 
-    public String getIdentifier() {
-        return identifier;
+    public Question(String id){
+        objectId= id;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getStatement() {
@@ -33,11 +37,13 @@ public class Question {
         this.options = options;
     }
 
-    public UserAnswer getUserAnswer() {
-        return userAnswer;
-    }
 
-    public void setUserAnswer(UserAnswer userAnswer) {
-        this.userAnswer = userAnswer;
+    public Option validOption(){
+        for (Option option:options){
+            if(option.isChecked()){
+                return option;
+            }
+        }
+        return null;
     }
 }
