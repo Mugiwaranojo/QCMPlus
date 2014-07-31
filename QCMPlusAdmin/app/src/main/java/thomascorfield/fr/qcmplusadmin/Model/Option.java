@@ -1,6 +1,8 @@
 package thomascorfield.fr.qcmplusadmin.Model;
 
-public class Option {
+import java.io.Serializable;
+
+public class Option implements Serializable {
 
     private String identifier;
     private String statement;

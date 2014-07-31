@@ -7,6 +7,8 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.Controllers.MCQSaveActivity;
+import thomascorfield.fr.qcmplusadmin.apiService.DAO.MCQDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserMCQDAO;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
@@ -47,9 +49,14 @@ public class MCQServiceManager {
     }
 
     private IAPIServiceResultListener<User> userListener;
+    private IAPIServiceResultListener<MCQ> mcqListener;
 
     public void setUserListener(IAPIServiceResultListener<User> userListener) {
         this.userListener = userListener;
+    }
+
+    public void setMCQListener(IAPIServiceResultListener<MCQ> mcqListener) {
+        this.mcqListener = mcqListener;
     }
 
     public void connect(String login, String password){
@@ -76,6 +83,11 @@ public class MCQServiceManager {
         });
     }
 
+    private IAPIServiceResultListener<ArrayList<MCQ>> mcqListListener;
+
+    public void setMCQListListener(IAPIServiceResultListener<ArrayList<MCQ>> mcqListListener) {
+        this.mcqListListener = mcqListListener;
+    }
 
     private IAPIServiceResultListener<ArrayList<User>> userListListener;
 
@@ -94,4 +106,10 @@ public class MCQServiceManager {
     public void deleteUser(User user){
         UserDAO.getInstance().delete(user, userListener);
     }
+
+    public void fetchAllMCQ(){
+        MCQDAO.getInstance().fetchAllMCQ(mcqListListener);
+    }
+
+    public void saveMCQ(MCQ mcq) { MCQDAO.getInstance().save(mcq, mcqListener); }
 }

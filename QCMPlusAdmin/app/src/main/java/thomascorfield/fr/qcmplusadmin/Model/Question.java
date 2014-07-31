@@ -1,8 +1,9 @@
 package thomascorfield.fr.qcmplusadmin.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
 
     private String identifier;
     private String statement;
@@ -39,5 +40,32 @@ public class Question {
 
     public void setUserAnswer(UserAnswer userAnswer) {
         this.userAnswer = userAnswer;
+    }
+
+    public static ArrayList<Question> getAllQuestions (int size) {
+
+        ArrayList<Question> list = new ArrayList<Question>();
+
+        for (int i = 0; i < size; i++) {
+
+            Question q = new Question();
+            q.setStatement("Question Test" + (i + 1));
+
+            ArrayList options = new ArrayList();
+
+                for (int j = 0; j < 5; j++) {
+
+                    Option o = new Option();
+                    o.setStatement("Option Test" + (j + 1));
+
+                    options.add(j, o);
+                }
+
+            q.setOptions(options);
+
+            list.add(q);
+        }
+
+        return list;
     }
 }
