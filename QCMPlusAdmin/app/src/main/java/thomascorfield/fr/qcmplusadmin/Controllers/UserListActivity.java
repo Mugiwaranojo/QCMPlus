@@ -100,15 +100,18 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
 
                 addUserPageIntent.putExtra("User", userSelected);
                 startActivity(addUserPageIntent);
-                //Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
                 break;
 
             case ACTION_DELETE:
-                //this.listView.setAdapter(new MusicAdapter(getActivity()));
-               //this.listView.invalidateViews();
-                Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
+                MCQServiceManager.getInstance(this).setUserListener(new IAPIServiceResultListener<User>() {
+                    @Override
+                    public void onApiResultListener(User obj, ParseException e) {
+                        MCQServiceManager.getInstance(getApplicationContext()).fetchAllUser();
+                        Toast.makeText(getApplicationContext(), obj.toString()+" a été Supprimer", Toast.LENGTH_LONG).show();
+                    }
+                });
+                MCQServiceManager.getInstance(this).deleteUser(userSelected);
                 break;
-
             default:
                 break;
 

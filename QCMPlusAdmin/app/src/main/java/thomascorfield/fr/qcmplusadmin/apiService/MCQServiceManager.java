@@ -86,4 +86,12 @@ public class MCQServiceManager {
     public void fetchAllUser(){
         UserDAO.getInstance().fetchAllUser(userListListener);
     }
+
+    public void saveUser(User user) {
+        UserDAO.getInstance().save(user, userListener);
+    }
+
+    public void deleteUser(User user){
+        UserDAO.getInstance().delete(user, userListener);
+    }
 }
