@@ -39,7 +39,7 @@ public class UserDAO implements IDAO<User> {
         }
         user.put("firstname", obj.getFirstname());
         user.put("lastname", obj.getLastname());
-        user.put("company", obj.getLastname());
+        user.put("company", obj.getCompany());
         user.put("isAdmin", obj.isAdmin());
         user.put("login", obj.getLogin());
         user.put("password", obj.getPassword());
