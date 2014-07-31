@@ -40,7 +40,7 @@ public class MCQDAO implements IDAO<MCQ> {
             mcq.setObjectId(obj.getObjectId());
         }
         mcq.put("name", obj.getName());
-        mcq.put("lastname", obj.getDescription());
+        mcq.put("summary", obj.getDescription());
         mcq.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
