@@ -1,8 +1,10 @@
 package thomascorfield.fr.qcmplusadmin.Model;
 
+import java.io.Serializable;
+
 import thomascorfield.fr.qcmplusadmin.Model.Option;
 
-public class UserAnswer {
+public class UserAnswer implements Serializable{
 
     private Question question;
     private Option answer;

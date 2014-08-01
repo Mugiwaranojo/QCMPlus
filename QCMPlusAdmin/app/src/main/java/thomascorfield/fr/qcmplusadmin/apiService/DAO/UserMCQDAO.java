@@ -77,8 +77,7 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
         userMCQ.setMcq(new MCQ(pObject.getParseObject("mcq").getObjectId()));
         userMCQ.setState(pObject.getString("state"));
         Time timeSpent= new Time();
-        timeSpent.set((Integer) pObject.getNumber("timeSpent"),0,0,0,0,0);
-        userMCQ.setTimeSpent(timeSpent);
+        userMCQ.setTimeSpent((Integer) pObject.getNumber("timeSpent"));
         userMCQ.setDateCreated(pObject.getCreatedAt());
         userMCQ.setDateUpdated(pObject.getUpdatedAt());
         return userMCQ;

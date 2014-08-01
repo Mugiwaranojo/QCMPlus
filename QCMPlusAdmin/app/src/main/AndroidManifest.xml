@@ -44,6 +44,10 @@
             android:name="thomascorfield.fr.qcmplusadmin.Controllers.UserListMCQActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="thomascorfield.fr.qcmplusadmin.Controllers.UserMCQActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

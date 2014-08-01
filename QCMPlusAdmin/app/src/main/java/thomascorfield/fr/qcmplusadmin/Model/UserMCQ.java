@@ -16,7 +16,7 @@ public class UserMCQ implements Serializable{
     private User user;
     private MCQ mcq;
     private String state;
-    private Time timeSpent;
+    private Integer timeSpent;
     private ArrayList<UserAnswer> userAnswers;
     private Date dateCreated;
     private Date dateUpdated;
@@ -46,11 +46,11 @@ public class UserMCQ implements Serializable{
         this.state = state;
     }
 
-    public Time getTimeSpent() {
+    public Integer getTimeSpent() {
         return timeSpent;
     }
 
-    public void setTimeSpent(Time timeSpent) {
+    public void setTimeSpent(Integer timeSpent) {
         this.timeSpent = timeSpent;
     }
 

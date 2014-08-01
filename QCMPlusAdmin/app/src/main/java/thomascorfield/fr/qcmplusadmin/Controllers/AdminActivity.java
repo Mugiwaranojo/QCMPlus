@@ -1,6 +1,7 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,24 +27,20 @@ public class AdminActivity extends Activity {
 
         final Intent showMcqListIntent;
         showMcqListIntent = new Intent(this, MCQListActivity.class);
-
         this.mcqListBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-
                 startActivity(showMcqListIntent);
             }
         });
 
         final Intent showUsersListIntent;
         showUsersListIntent = new Intent(this, UserListActivity.class);
-
         this.userListBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-
                 startActivity(showUsersListIntent);
             }
         });
