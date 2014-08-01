@@ -1,5 +1,6 @@
 package thomascorfield.fr.qcmplusadmin.apiService.DAO;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -50,8 +51,25 @@ public class MCQDAO implements IDAO<MCQ> {
     }
 
     @Override
-    public void delete(MCQ obj, IAPIServiceResultListener<MCQ> listener) {
-
+    public void delete(MCQ obj, final IAPIServiceResultListener<MCQ> listener) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("MCQ");
+        query.whereEqualTo("objectId", obj.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(parseObjects.size()==1){
+                    final ParseObject pMcq= parseObjects.get(0);
+                    pMcq.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            listener.onApiResultListener(parseObjectToMCQ(pMcq), e);
+                        }
+                    });
+                }else{
+                    listener.onApiResultListener(null, e);
+                }
+            }
+        });
     }
 
     @Override

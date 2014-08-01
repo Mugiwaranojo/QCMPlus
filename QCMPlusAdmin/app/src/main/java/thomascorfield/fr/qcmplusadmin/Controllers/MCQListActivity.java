@@ -4,25 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
-import thomascorfield.fr.qcmplusadmin.Model.MCQ;
-import thomascorfield.fr.qcmplusadmin.Model.User;
+import thomascorfield.fr.qcmplusadmin.Controllers.adapter.McqAdapter;
 import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
@@ -43,11 +39,7 @@ public class MCQListActivity extends Activity implements IAPIServiceResultListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mcq_list);
 
-        this.mcqs = new ArrayList<MCQ>();
-
         this.listView = (ListView) findViewById(R.id.listView);
-        McqAdapter adapter = new McqAdapter();
-        this.listView.setAdapter(adapter);
 
         this.addMcqPageIntent = new Intent(this, MCQSaveActivity.class);
 
@@ -67,7 +59,6 @@ public class MCQListActivity extends Activity implements IAPIServiceResultListen
             @Override
             public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
 
-                // Cast necessaire dans le contexte d'un ContextMenuListener
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
 
                 MCQ mcqSelected = mcqs.get(info.position);
@@ -85,6 +76,14 @@ public class MCQListActivity extends Activity implements IAPIServiceResultListen
     }
 
     @Override
+    public void onApiResultListener(ArrayList<MCQ> obj, ParseException e) {
+        mcqs = obj;
+        McqAdapter adapter = new McqAdapter(this, mcqs);
+        this.listView.setAdapter(adapter);
+        listView.invalidate();
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -97,13 +96,21 @@ public class MCQListActivity extends Activity implements IAPIServiceResultListen
 
                 addMcqPageIntent.putExtra("MCQ", mcqSelected);
                 startActivity(addMcqPageIntent);
-                //Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+
                 break;
 
             case ACTION_DELETE:
-                //this.listView.setAdapter(new MusicAdapter(getActivity()));
-                //this.listView.invalidateViews();
-                Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
+
+                MCQServiceManager.getInstance(this).setMCQListener(new IAPIServiceResultListener<MCQ>() {
+                    @Override
+                    public void onApiResultListener(MCQ obj, ParseException e) {
+                        MCQServiceManager.getInstance(getApplicationContext()).fetchAllMCQ();
+                        Toast.makeText(getApplicationContext(), obj.toString() + " a été supprimé", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                MCQServiceManager.getInstance(this).deleteMCQ(mcqSelected);
+
                 break;
 
             default:
@@ -112,49 +119,5 @@ public class MCQListActivity extends Activity implements IAPIServiceResultListen
         }
 
         return super.onContextItemSelected(item);
-    }
-
-    @Override
-    public void onApiResultListener(ArrayList<MCQ> obj, ParseException e) {
-        mcqs = obj;
-        McqAdapter adapter = new McqAdapter();
-        this.listView.setAdapter(adapter);
-        listView.invalidate();
-    }
-
-    private class McqAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return mcqs.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mcqs.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            MCQ mcqToDisplay = (MCQ) getItem(i);
-
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-            View cell = inflater.inflate(R.layout.layout_list_cell, null);
-
-            TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
-            TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);
-
-            titleTextView.setText(mcqToDisplay.getName());
-            descriptionTextView.setText(mcqToDisplay.getDescription());
-
-            return cell;
-        }
     }
 }

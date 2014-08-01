@@ -5,7 +5,7 @@
     android:background="#8064A2">
 
     <TextView
-        android:text="Espace Administrateur"
+        android:text="@string/admin_title"
         android:gravity="center"
         android:layout_width="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -23,7 +23,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gestion des utilisateurs"
+            android:text="@string/admin_user"
             android:id="@+id/userListBtn"
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal"
@@ -34,7 +34,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gestion des questionnaires"
+            android:text="@string/admin_mcq"
             android:id="@+id/mcqListBtn"
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal"

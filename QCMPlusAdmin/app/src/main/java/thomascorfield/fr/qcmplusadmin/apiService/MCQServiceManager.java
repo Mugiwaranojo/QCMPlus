@@ -119,4 +119,8 @@ public class MCQServiceManager {
     }
 
     public void saveMCQ(MCQ mcq) { MCQDAO.getInstance().save(mcq, mcqListener); }
+
+    public void deleteMCQ(MCQ mcq){
+        MCQDAO.getInstance().delete(mcq, mcqListener);
+    }
 }

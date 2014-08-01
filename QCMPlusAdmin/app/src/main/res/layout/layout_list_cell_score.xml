@@ -22,14 +22,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/titleListScoreTextView"
                 android:textColor="#2F7C80"
-                android:text="Title Text"
+                android:text="@string/list_cell_score_title"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/descriptionListScoreTextView"
-                android:text="Description Text"
+                android:text="@string/list_cell_score_description"
                 android:textColor="#2F7C80"
                 android:textSize="15sp"/>
 
@@ -40,7 +40,7 @@
             android:layout_weight="20"
             android:id="@+id/scoreListScoreTextView"
             android:textColor="#2F7C80"
-            android:text="0/10"
+            android:text="@string/list_cell_score_value"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"/>

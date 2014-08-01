@@ -4,26 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.Controllers.adapter.QuestionAdapter;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.Model.Question;
-import thomascorfield.fr.qcmplusadmin.R;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
@@ -84,7 +81,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
         this.questions = Question.getAllQuestions(2);
 
         this.listView = (ListView) findViewById(R.id.listView);
-        QuestionsAdapter adapter = new QuestionsAdapter();
+        QuestionAdapter adapter = new QuestionAdapter(this, questions);
         this.listView.setAdapter(adapter);
 
         this.addQuestionPageIntent = new Intent(this, QuestionSaveActivity.class);
@@ -131,12 +128,11 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
 
                 addQuestionPageIntent.putExtra("Question", questionSelected);
                 startActivity(addQuestionPageIntent);
-                //Toast.makeText(this, "Modifier", Toast.LENGTH_LONG).show();
+
                 break;
 
             case ACTION_DELETE:
-                //this.listView.setAdapter(new QuestionsAdapter(getActivity()));
-                //this.listView.invalidateViews();
+
                 Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
                 break;
 
@@ -154,42 +150,6 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
         if(obj!= null){
             Toast.makeText(this, "Questionnaire enregistré.", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MCQListActivity.class));
-        }
-    }
-
-    private class QuestionsAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return questions.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return questions.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            Question questionToDisplay = (Question) getItem(i);
-
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-            View cell = inflater.inflate(R.layout.layout_list_cell, null);
-
-            TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
-            TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);
-
-            titleTextView.setText(questionToDisplay.getStatement());
-            descriptionTextView.setText(questionToDisplay.getStatement());
-
-            return cell;
         }
     }
 }

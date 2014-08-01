@@ -14,18 +14,18 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/titleTextView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/titleTextView"
+            android:text="@string/list_cell_title_text"
             android:textColor="#2F7C80"
-            android:text="Title Text"
             android:textStyle="bold"
             android:textSize="18sp"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/descriptionTextView"
-            android:text="Description Text"
+            android:text="@string/list_cell_description_text"
             android:textColor="#2F7C80"
             android:textSize="15sp"/>
 
