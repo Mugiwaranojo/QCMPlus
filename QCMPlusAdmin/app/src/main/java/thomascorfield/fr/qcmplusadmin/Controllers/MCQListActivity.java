@@ -16,12 +16,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+
 import java.util.ArrayList;
 
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
+import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
+import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
-public class MCQListActivity extends Activity {
+public class MCQListActivity extends Activity implements IAPIServiceResultListener<ArrayList<MCQ>> {
 
     private ListView listView;
     private Button addMcqBtn;
@@ -74,6 +79,9 @@ public class MCQListActivity extends Activity {
         };
 
         this.listView.setOnCreateContextMenuListener(listener);
+
+        MCQServiceManager.getInstance(this).setMCQListListener(this);
+        MCQServiceManager.getInstance(this).fetchAllMCQ();
     }
 
     @Override
@@ -104,6 +112,14 @@ public class MCQListActivity extends Activity {
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onApiResultListener(ArrayList<MCQ> obj, ParseException e) {
+        mcqs = obj;
+        McqAdapter adapter = new McqAdapter();
+        this.listView.setAdapter(adapter);
+        listView.invalidate();
     }
 
     private class McqAdapter extends BaseAdapter {

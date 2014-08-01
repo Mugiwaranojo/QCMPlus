@@ -64,7 +64,6 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
             @Override
             public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
 
-                // Cast necessaire dans le contexte d'un ContextMenuListener
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
 
                 User userSelected = users.get(info.position);

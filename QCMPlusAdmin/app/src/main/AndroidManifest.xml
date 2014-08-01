@@ -8,6 +8,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:name="thomascorfield.fr.qcmplusadmin.Controllers.QuestionSaveActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="thomascorfield.fr.qcmplusadmin.Controllers.UserSaveActivity"
             android:label="@string/app_name" >
         </activity>

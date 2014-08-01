@@ -5,7 +5,7 @@
     android:background="#4BC0C6">
 
     <TextView
-        android:text="Ajouter/Modifier un utilisateur"
+        android:text="Ajouter/Modifier une question"
         android:gravity="center"
         android:layout_width="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -27,7 +27,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Nom"
+                android:text="Question"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -37,55 +37,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="60"
                 android:layout_margin="5dp"
+                android:inputType="textMultiLine"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:id="@+id/editTextLastname" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textSize="18sp"
-            android:text="Prénom"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="40"/>
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="60"
-            android:layout_margin="5dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:id="@+id/editTextFirstname" />
-
-    </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textSize="18sp"
-                android:text="Identifiant"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="40"/>
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="60"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:id="@+id/editTextLogin" />
+                android:id="@+id/editTextStatement" />
 
         </LinearLayout>
 
@@ -96,7 +51,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Mot de passe"
+                android:text="Choix 1"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -106,10 +61,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="60"
                 android:layout_margin="5dp"
+                android:inputType="textMultiLine"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
                 android:background="@android:color/white"
-                android:id="@+id/editTextPassword" />
+                android:id="@+id/editTextOption1" />
 
         </LinearLayout>
 
@@ -120,7 +75,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Société"
+                android:text="Choix 2"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -130,9 +85,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="60"
                 android:layout_margin="5dp"
+                android:inputType="textMultiLine"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:id="@+id/editTextCompany" />
+                android:id="@+id/editTextOption2" />
 
         </LinearLayout>
 
@@ -143,47 +99,78 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Admin"
+                android:text="Choix 3"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="40"/>
 
-            <RadioGroup
+            <EditText
                 android:layout_width="0dp"
                 android:layout_weight="60"
                 android:layout_margin="5dp"
+                android:inputType="textMultiLine"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/adminYesRadioBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content"
-                    android:saveEnabled="false"
-                    android:textSize="25sp"
-                    android:text="Oui"/>
-                <RadioButton
-                    android:id="@+id/adminNoRadioBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content"
-                    android:saveEnabled="false"
-                    android:textSize="25sp"
-                    android:text="Non"/>
-            </RadioGroup>
+                android:background="@android:color/white"
+                android:id="@+id/editTextOption3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:text="Choix 4"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="40"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="60"
+                android:layout_margin="5dp"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:id="@+id/editTextOption4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:text="Choix 5"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="40"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="60"
+                android:layout_margin="5dp"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:id="@+id/editTextOption5" />
 
         </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sauvegarder"
-            android:id="@+id/userSaveBtn"
-            android:background="#2F7C80"
             android:textColor="@android:color/white"
+            android:id="@+id/questionSaveBtn"
+            android:background="#2F7C80"
+            android:text="Sauvegarder"
             android:padding="10dp"
             android:layout_margin="5dp"
             android:layout_gravity="center_horizontal" />

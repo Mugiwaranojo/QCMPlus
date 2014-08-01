@@ -3,9 +3,6 @@ package thomascorfield.fr.qcmplusadmin.Controllers;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +11,8 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 
-import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
@@ -61,7 +58,9 @@ public class UserSaveActivity extends Activity implements IAPIServiceResultListe
             this.editTextCompany.setText("");
             this.adminNoRadioBtn.setChecked(true);
             this.adminYesRadioBtn.setChecked(false);
-            currentUser= new User();
+
+            currentUser = new User();
+
         } else {
 
             this.editTextLastname.setText(currentUser.getLastname());

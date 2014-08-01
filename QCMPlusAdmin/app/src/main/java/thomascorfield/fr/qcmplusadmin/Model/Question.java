@@ -9,6 +9,10 @@ public class Question implements Serializable {
     private String statement;
     private ArrayList<Option> options;
 
+    public Question(){
+
+    }
+
     public Question(String id){
         objectId= id;
     }
@@ -45,5 +49,32 @@ public class Question implements Serializable {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Question> getAllQuestions (int size) {
+
+        ArrayList<Question> list = new ArrayList<Question>();
+
+        for (int i = 0; i < size; i++) {
+
+            Question q = new Question(i+"");
+            q.setStatement("Question Test" + (i + 1));
+
+            ArrayList options = new ArrayList();
+
+                for (int j = 0; j < 5; j++) {
+
+                    Option o = new Option(j+"");
+                    o.setStatement("Option Test" + (j + 1));
+
+                    options.add(j, o);
+                }
+
+            q.setOptions(options);
+
+            list.add(q);
+        }
+
+        return list;
     }
 }

@@ -4,9 +4,12 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 
@@ -29,9 +32,21 @@ public class MCQDAO implements IDAO<MCQ> {
         return instance;
     }
 
-    @Override
-    public void save(MCQ obj, IAPIServiceResultListener<MCQ> listener) {
 
+    @Override
+    public void save(MCQ obj, final IAPIServiceResultListener<MCQ> listener) {
+        final ParseObject mcq =  new ParseObject("MCQ");
+        if(obj.getObjectId()!=null){
+            mcq.setObjectId(obj.getObjectId());
+        }
+        mcq.put("name", obj.getName());
+        mcq.put("summary", obj.getDescription());
+        mcq.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                listener.onApiResultListener(parseObjectToMCQ(mcq), e);
+            }
+        });
     }
 
     @Override
@@ -69,6 +84,20 @@ public class MCQDAO implements IDAO<MCQ> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void fetchAllMCQ(final IAPIServiceResultListener<ArrayList<MCQ>> listener){
+        final ArrayList<MCQ> mcqArrayList= new ArrayList<MCQ>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("MCQ");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                for (ParseObject pMCQ: parseObjects){
+                    mcqArrayList.add(parseObjectToMCQ(pMCQ));
+                }
+                listener.onApiResultListener(mcqArrayList, e);
+            }
+        });
     }
 
     public static MCQ parseObjectToMCQ(ParseObject pMCQ){
