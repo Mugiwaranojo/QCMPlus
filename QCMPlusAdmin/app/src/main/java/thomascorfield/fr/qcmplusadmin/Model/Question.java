@@ -5,17 +5,24 @@ import java.util.ArrayList;
 
 public class Question implements Serializable {
 
-    private String identifier;
+    private String objectId;
     private String statement;
     private ArrayList<Option> options;
-    private UserAnswer userAnswer;
 
-    public String getIdentifier() {
-        return identifier;
+    public Question(){
+
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public Question(String id){
+        objectId= id;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getStatement() {
@@ -34,12 +41,14 @@ public class Question implements Serializable {
         this.options = options;
     }
 
-    public UserAnswer getUserAnswer() {
-        return userAnswer;
-    }
 
-    public void setUserAnswer(UserAnswer userAnswer) {
-        this.userAnswer = userAnswer;
+    public Option validOption(){
+        for (Option option:options){
+            if(option.isChecked()){
+                return option;
+            }
+        }
+        return null;
     }
 
     public static ArrayList<Question> getAllQuestions (int size) {
@@ -48,14 +57,14 @@ public class Question implements Serializable {
 
         for (int i = 0; i < size; i++) {
 
-            Question q = new Question();
+            Question q = new Question(i+"");
             q.setStatement("Question Test" + (i + 1));
 
             ArrayList options = new ArrayList();
 
                 for (int j = 0; j < 5; j++) {
 
-                    Option o = new Option();
+                    Option o = new Option(j+"");
                     o.setStatement("Option Test" + (j + 1));
 
                     options.add(j, o);

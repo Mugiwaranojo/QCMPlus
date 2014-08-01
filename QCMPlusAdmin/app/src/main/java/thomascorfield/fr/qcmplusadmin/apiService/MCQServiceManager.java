@@ -7,7 +7,9 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
-import thomascorfield.fr.qcmplusadmin.Controllers.MCQSaveActivity;
+import thomascorfield.fr.qcmplusadmin.Model.Question;
+import thomascorfield.fr.qcmplusadmin.Model.UserAnswer;
+import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserAnswerDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.MCQDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserMCQDAO;
@@ -24,7 +26,6 @@ public class MCQServiceManager {
     private static final String APP_ID="1XpHvksxkUpokKjgKINeQuzwCUAAkyFpwRHBZTz3";
     private static final String CLIENT_KEY="pJFS5zqqaBKosNs69n1MQxV8kVSta0y3c0NrRUJW";
 
-    private Context context;
     private static MCQServiceManager instance;
     private User currentUser;
 
@@ -37,7 +38,6 @@ public class MCQServiceManager {
     }
 
     private MCQServiceManager(Context context){
-        this.context= context;
         Parse.initialize(context, APP_ID, CLIENT_KEY);
     }
 
@@ -63,22 +63,29 @@ public class MCQServiceManager {
         UserDAO.getInstance().findByUserPassword(login, password, userListener);
     }
 
-    private IAPIServiceResultListener<ArrayList<MCQ>> listMCQListener;
+    private IAPIServiceResultListener<ArrayList<UserMCQ>> listUserMCQListener;
 
-    public void setListMCQListener(IAPIServiceResultListener<ArrayList<MCQ>> listMCQListener) {
-        this.listMCQListener = listMCQListener;
+    public void setListUserMCQListener(IAPIServiceResultListener<ArrayList<UserMCQ>> listUserMCQListener) {
+        this.listUserMCQListener = listUserMCQListener;
     }
 
-    public void fetchCurrentUserMCQ(){
-        final ArrayList<MCQ> mcqArrayList= new ArrayList<MCQ>();
-        UserMCQDAO.getInstance().findByUser(getCurrentUser(), new IAPIServiceResultListener<ArrayList<UserMCQ>>() {
+    public void fetchUserMCQ(User user){
+        UserMCQDAO.getInstance().findByUser(user, new IAPIServiceResultListener<ArrayList<UserMCQ>>() {
             @Override
             public void onApiResultListener(ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
                 for(UserMCQ userMCQ: userMCQArrayList){
-                    mcqArrayList.add(userMCQ.getMcq());
+                    ArrayList<UserAnswer> userAnswers= UserAnswerDAO.getInstance().findByUserMCQ(userMCQ);
+                    for(UserAnswer userAnswer: userAnswers){
+                        for(Question question: userMCQ.getMcq().getQuestions()){
+                            if(userAnswer.getQuestion().getObjectId().equals(question.getObjectId())){
+                                userAnswer.getQuestion().setOptions(question.getOptions());
+                            }
+                        }
+                    }
+                    userMCQ.setUserAnswers(userAnswers);
                 }
                 getCurrentUser().setUserMCQs(userMCQArrayList);
-                listMCQListener.onApiResultListener(mcqArrayList, e);
+                listUserMCQListener.onApiResultListener(userMCQArrayList, e);
             }
         });
     }

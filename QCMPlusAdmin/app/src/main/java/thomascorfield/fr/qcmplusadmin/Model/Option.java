@@ -2,18 +2,22 @@ package thomascorfield.fr.qcmplusadmin.Model;
 
 import java.io.Serializable;
 
-public class Option implements Serializable {
+public class Option implements Serializable{
 
-    private String identifier;
+    private String objectId;
     private String statement;
     private boolean checked;
 
-    public String getIdentifier() {
-        return identifier;
+    public Option(String objectId) {
+
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public String getIdentifier() {
+        return objectId;
+    }
+
+    public void setIdentifier(String objectId) {
+        this.objectId = objectId;
     }
 
     public boolean isChecked() {

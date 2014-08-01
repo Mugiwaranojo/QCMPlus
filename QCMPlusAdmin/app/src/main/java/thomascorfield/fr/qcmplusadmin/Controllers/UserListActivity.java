@@ -74,6 +74,14 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
             }
         };
         this.listView.setOnCreateContextMenuListener(listener);
+        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent= new Intent(getApplicationContext(), UserListMCQActivity.class);
+                intent.putExtra("user", users.get(i));
+                startActivity(intent);
+            }
+        });
         MCQServiceManager.getInstance(this).setUserListListener(this);
         MCQServiceManager.getInstance(this).fetchAllUser();
     }
@@ -106,7 +114,7 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
                     @Override
                     public void onApiResultListener(User obj, ParseException e) {
                         MCQServiceManager.getInstance(getApplicationContext()).fetchAllUser();
-                        Toast.makeText(getApplicationContext(), obj.toString()+" a été Supprimer", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), obj.toString() + " a été Supprimer", Toast.LENGTH_LONG).show();
                     }
                 });
                 MCQServiceManager.getInstance(this).deleteUser(userSelected);
