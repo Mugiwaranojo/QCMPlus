@@ -7,7 +7,7 @@
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
-        android:text="Ajouter/Modifier un questionnaire"
+        android:text="@string/mcq_save_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
         android:layout_height="0dp"
@@ -26,8 +26,8 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Nom"
                 android:textSize="18sp"
+                android:text="@string/mcq_save_name"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
@@ -55,7 +55,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Description"
+                android:text="@string/mcq_save_description"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
@@ -84,7 +84,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Liste des questions"
+                android:text="@string/mcq_save_list_title"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
@@ -115,7 +115,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sauvegarder"
+                android:text="@string/mcq_save_submit"
                 android:id="@+id/mcqSaveBtn"
                 android:background="#2F7C80"
                 android:padding="10dp"
@@ -133,7 +133,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ajouter une question"
+                android:text="@string/mcq_save_add_question"
                 android:id="@+id/addQuestionBtn"
                 android:background="#2F7C80"
                 android:padding="10dp"

@@ -5,7 +5,7 @@
     android:background="#4BC0C6">
 
     <TextView
-        android:text="Ajouter/Modifier une question"
+        android:text="@string/question_save_title"
         android:gravity="center"
         android:layout_width="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -27,7 +27,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Question"
+                android:text="@string/question_save_question"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -51,7 +51,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Choix 1"
+                android:text="@string/question_save_option1"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -75,7 +75,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Choix 2"
+                android:text="@string/question_save_option2"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -99,7 +99,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Choix 3"
+                android:text="@string/question_save_option3"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -123,7 +123,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Choix 4"
+                android:text="@string/question_save_option4"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -147,7 +147,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Choix 5"
+                android:text="@string/question_save_option5"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -170,7 +170,7 @@
             android:textColor="@android:color/white"
             android:id="@+id/questionSaveBtn"
             android:background="#2F7C80"
-            android:text="Sauvegarder"
+            android:text="@string/question_save_submit"
             android:padding="10dp"
             android:layout_margin="5dp"
             android:layout_gravity="center_horizontal" />

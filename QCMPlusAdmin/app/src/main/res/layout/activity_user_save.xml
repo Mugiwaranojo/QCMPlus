@@ -5,9 +5,9 @@
     android:background="#4BC0C6">
 
     <TextView
-        android:text="Ajouter/Modifier un utilisateur"
         android:gravity="center"
         android:layout_width="match_parent"
+        android:text="@string/user_save_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
         android:layout_height="0dp"
@@ -27,7 +27,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Nom"
+                android:text="@string/user_save_lastname"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -50,7 +50,7 @@
 
         <TextView
             android:textSize="18sp"
-            android:text="Prénom"
+            android:text="@string/user_save_firstname"
             android:textColor="@android:color/white"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -73,7 +73,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Identifiant"
+                android:text="@string/user_save_login"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -96,7 +96,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Mot de passe"
+                android:text="@string/user_save_password"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -120,7 +120,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Société"
+                android:text="@string/user_save_company"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -143,7 +143,7 @@
 
             <TextView
                 android:textSize="18sp"
-                android:text="Admin"
+                android:text="@string/user_save_admin"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -159,20 +159,20 @@
                     android:id="@+id/adminYesRadioBtn"
                     android:layout_width="0dp"
                     android:layout_weight="30"
+                    android:text="@string/user_save_admin_yes"
                     android:textColor="@android:color/white"
                     android:layout_height="wrap_content"
                     android:saveEnabled="false"
-                    android:textSize="25sp"
-                    android:text="Oui"/>
+                    android:textSize="25sp"/>
                 <RadioButton
                     android:id="@+id/adminNoRadioBtn"
                     android:layout_width="0dp"
                     android:layout_weight="30"
+                    android:text="@string/user_save_admin_no"
                     android:textColor="@android:color/white"
                     android:layout_height="wrap_content"
                     android:saveEnabled="false"
-                    android:textSize="25sp"
-                    android:text="Non"/>
+                    android:textSize="25sp"/>
             </RadioGroup>
 
         </LinearLayout>
@@ -180,7 +180,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sauvegarder"
+            android:text="@string/user_save_submit"
             android:id="@+id/userSaveBtn"
             android:background="#2F7C80"
             android:textColor="@android:color/white"

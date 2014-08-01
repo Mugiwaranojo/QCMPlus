@@ -41,7 +41,6 @@ public class Question implements Serializable {
         this.options = options;
     }
 
-
     public Option validOption(){
         for (Option option:options){
             if(option.isChecked()){

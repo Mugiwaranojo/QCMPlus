@@ -2,7 +2,45 @@
 <resources>
 
     <string name="app_name">QCM Plus Admin</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="list_cell_title_text">Title Text</string>
+    <string name="list_cell_description_text">Description Text</string>
+    <string name="user_save_title">Ajouter/Modifier un utilisateur</string>
+    <string name="user_save_lastname">Nom</string>
+    <string name="user_save_firstname">Prénom</string>
+    <string name="user_save_login">Identifiant</string>
+    <string name="user_save_password">Mot de passe</string>
+    <string name="user_save_company">Société</string>
+    <string name="user_save_admin">Admin</string>
+    <string name="user_save_admin_yes">Oui</string>
+    <string name="user_save_admin_no">Non</string>
+    <string name="user_save_submit">Enregistrer</string>
+    <string name="mcq_save_title">Ajouter/Modifier un questionnaire</string>
+    <string name="mcq_save_name">Nom</string>
+    <string name="mcq_save_description">Description</string>
+    <string name="mcq_save_list_title">Liste des questions</string>
+    <string name="mcq_save_submit">Enregistrer</string>
+    <string name="mcq_save_add_question">Ajouter une question</string>
+    <string name="mcq_list_title">Liste des questionnaires</string>
+    <string name="user_list_title">Liste des utilisateurs</string>
+    <string name="question_save_title">Ajouter/Modifier une question</string>
+    <string name="question_save_question">Question</string>
+    <string name="question_save_option1">Choix 1</string>
+    <string name="question_save_option2">Choix 2</string>
+    <string name="question_save_option3">Choix 3</string>
+    <string name="question_save_option4">Choix 4</string>
+    <string name="question_save_option5">Choix 5</string>
+    <string name="question_save_submit">Enregistrer</string>
+    <string name="login_name">Identifiant</string>
+    <string name="login_password">Mot de passe</string>
+    <string name="login_submit">Connexion</string>
+    <string name="user_list_mcq_title">Titre</string>
+    <string name="user_list_mcq_subtitle">Liste des questionnaires</string>
+    <string name="list_cell_score_title">Title Text</string>
+    <string name="list_cell_score_description">Description Text</string>
+    <string name="list_cell_score_value">0/10</string>
+    <string name="admin_title">Espace Administrateur</string>
+    <string name="admin_user">Gestion des utilisateurs</string>
+    <string name="admin_mcq">Gestion des questionnaires</string>
 
 </resources>

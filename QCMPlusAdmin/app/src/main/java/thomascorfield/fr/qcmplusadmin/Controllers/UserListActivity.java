@@ -4,26 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
-import thomascorfield.fr.qcmplusadmin.Model.MCQ;
+import thomascorfield.fr.qcmplusadmin.Controllers.adapter.UserAdapter;
 import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.R;
-import thomascorfield.fr.qcmplusadmin.Service.MCQService;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
@@ -73,15 +68,17 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
                 menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
             }
         };
+
         this.listView.setOnCreateContextMenuListener(listener);
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent= new Intent(getApplicationContext(), UserListMCQActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserListMCQActivity.class);
                 intent.putExtra("user", users.get(i));
                 startActivity(intent);
             }
         });
+
         MCQServiceManager.getInstance(this).setUserListListener(this);
         MCQServiceManager.getInstance(this).fetchAllUser();
     }
@@ -89,7 +86,7 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
     @Override
     public void onApiResultListener(ArrayList<User> obj, ParseException e) {
         users= obj;
-        UserAdapter adapter = new UserAdapter();
+        UserAdapter adapter = new UserAdapter(this, users);
         this.listView.setAdapter(adapter);
         listView.invalidate();
     }
@@ -114,7 +111,7 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
                     @Override
                     public void onApiResultListener(User obj, ParseException e) {
                         MCQServiceManager.getInstance(getApplicationContext()).fetchAllUser();
-                        Toast.makeText(getApplicationContext(), obj.toString() + " a été Supprimer", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), obj.toString() + " a été supprimé", Toast.LENGTH_LONG).show();
                     }
                 });
                 MCQServiceManager.getInstance(this).deleteUser(userSelected);
@@ -125,43 +122,5 @@ public class UserListActivity extends Activity  implements IAPIServiceResultList
         }
 
         return super.onContextItemSelected(item);
-    }
-
-
-
-    private class UserAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return users.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return users.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            User userToDisplay = (User) getItem(i);
-
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-            View cell = inflater.inflate(R.layout.layout_list_cell, null);
-
-            TextView titleTextView = (TextView) cell.findViewById(R.id.titleTextView);
-            TextView descriptionTextView = (TextView) cell.findViewById(R.id.descriptionTextView);
-
-            titleTextView.setText(userToDisplay.toString());
-            descriptionTextView.setText(userToDisplay.getCompany());
-
-            return cell;
-        }
     }
 }

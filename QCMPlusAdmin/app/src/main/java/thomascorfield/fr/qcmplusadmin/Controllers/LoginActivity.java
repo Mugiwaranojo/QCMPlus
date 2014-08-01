@@ -11,10 +11,8 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 
-import thomascorfield.fr.qcmplusadmin.Model.User;
-import thomascorfield.fr.qcmplusadmin.Service.MCQService;
-import thomascorfield.fr.qcmplusadmin.Service.OnConnectionResultListener;
 import thomascorfield.fr.qcmplusadmin.R;
+import thomascorfield.fr.qcmplusadmin.Model.User;
 import thomascorfield.fr.qcmplusadmin.apiService.IAPIServiceResultListener;
 import thomascorfield.fr.qcmplusadmin.apiService.MCQServiceManager;
 
