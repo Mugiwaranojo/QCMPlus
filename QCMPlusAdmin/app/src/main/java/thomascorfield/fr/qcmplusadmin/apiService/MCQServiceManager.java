@@ -7,8 +7,11 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.Model.Option;
 import thomascorfield.fr.qcmplusadmin.Model.Question;
 import thomascorfield.fr.qcmplusadmin.Model.UserAnswer;
+import thomascorfield.fr.qcmplusadmin.apiService.DAO.OptionDAO;
+import thomascorfield.fr.qcmplusadmin.apiService.DAO.QuestionDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserAnswerDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.MCQDAO;
 import thomascorfield.fr.qcmplusadmin.apiService.DAO.UserDAO;
@@ -50,6 +53,8 @@ public class MCQServiceManager {
 
     private IAPIServiceResultListener<User> userListener;
     private IAPIServiceResultListener<MCQ> mcqListener;
+    private IAPIServiceResultListener<Question> questionListener;
+    private IAPIServiceResultListener<Option> optionListener;
 
     public void setUserListener(IAPIServiceResultListener<User> userListener) {
         this.userListener = userListener;
@@ -57,6 +62,14 @@ public class MCQServiceManager {
 
     public void setMCQListener(IAPIServiceResultListener<MCQ> mcqListener) {
         this.mcqListener = mcqListener;
+    }
+
+    public void setQuestionListener(IAPIServiceResultListener<Question> questionListener) {
+        this.questionListener = questionListener;
+    }
+
+    public void setOptionListener(IAPIServiceResultListener<Option> optionListener) {
+        this.optionListener = optionListener;
     }
 
     public void connect(String login, String password){
@@ -123,4 +136,12 @@ public class MCQServiceManager {
     public void deleteMCQ(MCQ mcq){
         MCQDAO.getInstance().delete(mcq, mcqListener);
     }
+
+    public void saveQuestion(Question question) { QuestionDAO.getInstance().save(question, questionListener); }
+
+    public void deleteQuestion(Question question){ QuestionDAO.getInstance().delete(question, questionListener); }
+
+    public void saveOption(Option option) { OptionDAO.getInstance().save(option, optionListener); }
+
+    public void deleteOption(Option option){ OptionDAO.getInstance().delete(option, optionListener); }
 }

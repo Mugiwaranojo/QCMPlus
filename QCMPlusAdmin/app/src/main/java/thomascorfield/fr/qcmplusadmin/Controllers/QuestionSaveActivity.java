@@ -69,7 +69,7 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
             this.editTextOption5.setText(currentQuestion.getOptions().get(4).getStatement());
         }
 
-        /*MCQServiceManager.getInstance(this).setQuestionListener(this);
+        MCQServiceManager.getInstance(this).setQuestionListener(this);
         this.questionSaveBtn = (Button) findViewById(R.id.questionSaveBtn);
         this.questionSaveBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -78,14 +78,14 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
                 currentQuestion.setStatement(editTextStatement.getText().toString());
                 MCQServiceManager.getInstance(getApplicationContext()).saveQuestion(currentQuestion);
             }
-        });*/
+        });
     }
 
     @Override
     public void onApiResultListener(Question obj, ParseException e) {
         if(obj!=null){
             Toast.makeText(this, "Question enregistrée", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, UserListActivity.class));
+            startActivity(new Intent(this, MCQListActivity.class));
         }
     }
 }

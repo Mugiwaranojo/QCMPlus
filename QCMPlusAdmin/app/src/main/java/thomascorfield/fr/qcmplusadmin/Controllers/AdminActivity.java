@@ -1,7 +1,6 @@
 package thomascorfield.fr.qcmplusadmin.Controllers;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

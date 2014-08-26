@@ -1,8 +1,11 @@
 package thomascorfield.fr.qcmplusadmin.apiService.DAO;
 
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +33,56 @@ public class OptionDAO implements IDAO<Option> {
     }
 
     @Override
-    public void save(Option obj, IAPIServiceResultListener<Option> listener) {
-
+    public void save(Option obj, final IAPIServiceResultListener<Option> listener) {
+        final ParseObject option =  new ParseObject("Option");
+        if(obj.getObjectId()!=null){
+            option.setObjectId(obj.getObjectId());
+        }
+        option.put("statement", obj.getStatement());
+        option.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                listener.onApiResultListener(parseObjectToOption(option), e);
+            }
+        });
     }
 
     @Override
-    public void delete(Option obj, IAPIServiceResultListener<Option> listener) {
-
+    public void delete(Option obj, final IAPIServiceResultListener<Option> listener) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Option");
+        query.whereEqualTo("objectId", obj.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(parseObjects.size()==1){
+                    final ParseObject pOption= parseObjects.get(0);
+                    pOption.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            listener.onApiResultListener(parseObjectToOption(pOption), e);
+                        }
+                    });
+                }else{
+                    listener.onApiResultListener(null, e);
+                }
+            }
+        });
     }
 
     @Override
-    public void find(Option obj, IAPIServiceResultListener<Option> listener) {
-
+    public void find(Option obj, final IAPIServiceResultListener<Option> listener) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Option");
+        query.whereEqualTo("objectId", obj.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(parseObjects.size()==1){
+                    listener.onApiResultListener(parseObjectToOption(parseObjects.get(0)), e);
+                }else{
+                    listener.onApiResultListener(null, e);
+                }
+            }
+        });
     }
 
     public ArrayList<Option> findByQuestion(Question question){
@@ -52,7 +93,7 @@ public class OptionDAO implements IDAO<Option> {
         try {
             List<ParseObject> results= query.find();
             for (ParseObject pObj: results){
-                options.add(parseOjectToOption(pObj));
+                options.add(parseObjectToOption(pObj));
             }
             return options;
         } catch (ParseException e) {
@@ -61,7 +102,7 @@ public class OptionDAO implements IDAO<Option> {
         return null;
     }
 
-    public Option parseOjectToOption(ParseObject pObj) {
+    public Option parseObjectToOption(ParseObject pObj) {
         Option option=new Option(pObj.getObjectId());
         option.setStatement(pObj.getString("statement"));
         option.setChecked(pObj.getBoolean("checked"));

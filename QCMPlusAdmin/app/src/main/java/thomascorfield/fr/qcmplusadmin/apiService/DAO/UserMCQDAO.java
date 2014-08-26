@@ -90,7 +90,7 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
             userMCQ.setUser(user);
         }else {
             MCQ mcq= MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded());
-            ArrayList<Question> questions= QuestionDAO.getInstance().findByMQC(mcq);
+            ArrayList<Question> questions= QuestionDAO.getInstance().findByMCQ(mcq);
             mcq.setQuestions(questions);
             userMCQ.setMcq(mcq);
         }

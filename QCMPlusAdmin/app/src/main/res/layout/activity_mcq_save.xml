@@ -40,6 +40,9 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:inputType="text"
                 android:layout_margin="5dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -68,12 +71,45 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="fill_parent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:layout_margin="5dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
                 android:inputType="textMultiLine"
                 android:background="@android:color/white"
                 android:id="@+id/editTextDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="60dp"
+                android:text="@string/mcq_save_add_question"
+                android:id="@+id/addQuestionBtn"
+                android:background="#2F7C80"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/mcq_save_submit"
+                android:id="@+id/mcqSaveBtn"
+                android:background="#2F7C80"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
@@ -104,42 +140,6 @@
                 android:divider="@android:color/transparent"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/mcq_save_submit"
-                android:id="@+id/mcqSaveBtn"
-                android:background="#2F7C80"
-                android:padding="10dp"
-                android:layout_margin="5dp"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_horizontal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/mcq_save_add_question"
-                android:id="@+id/addQuestionBtn"
-                android:background="#2F7C80"
-                android:padding="10dp"
-                android:layout_margin="5dp"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 

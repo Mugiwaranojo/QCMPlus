@@ -67,8 +67,8 @@ public class UserAnswerDAO implements IDAO<UserAnswer>{
 
     public UserAnswer parseObjectToUserAnswer(ParseObject pObj) throws ParseException {
         UserAnswer userAnswer= new UserAnswer();
-        userAnswer.setQuestion(QuestionDAO.getInstance().parseOjectToQuestion(pObj.getParseObject("question").fetchIfNeeded()));
-        userAnswer.setAnswer(OptionDAO.getInstance().parseOjectToOption(pObj.getParseObject("option").fetchIfNeeded()));
+        userAnswer.setQuestion(QuestionDAO.getInstance().parseObjectToQuestion(pObj.getParseObject("question").fetchIfNeeded()));
+        userAnswer.setAnswer(OptionDAO.getInstance().parseObjectToOption(pObj.getParseObject("option").fetchIfNeeded()));
         return userAnswer;
     }
 }

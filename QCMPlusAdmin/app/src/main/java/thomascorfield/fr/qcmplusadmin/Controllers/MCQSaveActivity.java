@@ -78,7 +78,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
             }
         });
 
-        this.questions = Question.getAllQuestions(2);
+        this.questions = Question.getAllQuestions(10);
 
         this.listView = (ListView) findViewById(R.id.listView);
         QuestionAdapter adapter = new QuestionAdapter(this, questions);

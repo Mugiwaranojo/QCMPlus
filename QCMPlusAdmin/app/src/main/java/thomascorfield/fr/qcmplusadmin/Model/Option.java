@@ -12,11 +12,11 @@ public class Option implements Serializable{
 
     }
 
-    public String getIdentifier() {
+    public String getObjectId() {
         return objectId;
     }
 
-    public void setIdentifier(String objectId) {
+    public void setObjectId(String objectId) {
         this.objectId = objectId;
     }
 
