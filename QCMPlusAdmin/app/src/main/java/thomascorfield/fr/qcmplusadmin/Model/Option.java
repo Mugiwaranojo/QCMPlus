@@ -8,6 +8,10 @@ public class Option implements Serializable{
     private String statement;
     private boolean checked;
 
+    public Option() {
+
+    }
+
     public Option(String objectId) {
 
     }

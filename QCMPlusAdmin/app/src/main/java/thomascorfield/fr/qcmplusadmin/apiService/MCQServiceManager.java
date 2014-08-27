@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 
@@ -137,11 +138,25 @@ public class MCQServiceManager {
         MCQDAO.getInstance().delete(mcq, mcqListener);
     }
 
-    public void saveQuestion(Question question) { QuestionDAO.getInstance().save(question, questionListener); }
+    public void saveQuestion(final Question question, final MCQ mcq) {
+        QuestionDAO.getInstance().save(question, mcq, new IAPIServiceResultListener<Question>() {
+            @Override
+            public void onApiResultListener(Question obj, ParseException e) {
+                if(obj!=null){
+                   for (int i = 0; i < 5; i++) {
+                       Option opt = question.getOptions().get(i);
+                       if (opt.getStatement() != "") {
+                           opt.setChecked(false);
+                           OptionDAO.getInstance().save(opt, obj);
+                       }
+                   }
+                }
+                questionListener.onApiResultListener(question, e);
+            }
+        });
+    }
 
     public void deleteQuestion(Question question){ QuestionDAO.getInstance().delete(question, questionListener); }
-
-    public void saveOption(Option option) { OptionDAO.getInstance().save(option, optionListener); }
 
     public void deleteOption(Option option){ OptionDAO.getInstance().delete(option, optionListener); }
 }

@@ -63,7 +63,7 @@ public class Question implements Serializable {
 
                 for (int j = 0; j < 5; j++) {
 
-                    Option o = new Option(j+"");
+                    Option o = new Option();
                     o.setStatement("Option Test" + (j + 1));
 
                     options.add(j, o);

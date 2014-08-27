@@ -48,6 +48,22 @@ public class QuestionDAO implements IDAO<Question> {
         });
     }
 
+    public void save(Question obj, MCQ mcq, final IAPIServiceResultListener<Question> listener) {
+        ParseObject MCQParse= ParseObject.createWithoutData("MCQ", mcq.getObjectId());
+        final ParseObject question =  new ParseObject("Question");
+        if(obj.getObjectId()!=null){
+            question.setObjectId(obj.getObjectId());
+        }
+        question.put("statement", obj.getStatement());
+        question.put("mcq", MCQParse);
+        question.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                listener.onApiResultListener(parseObjectToQuestion(question), e);
+            }
+        });
+    }
+
     @Override
     public void delete(Question obj, final IAPIServiceResultListener<Question> listener) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");

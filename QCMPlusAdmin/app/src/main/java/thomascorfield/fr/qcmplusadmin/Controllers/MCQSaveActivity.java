@@ -93,6 +93,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
             public void onClick(View view) {
 
                 addQuestionPageIntent.putExtra("Question", new Question());
+                addQuestionPageIntent.putExtra("MCQ", currentMcq);
                 startActivity(addQuestionPageIntent);
             }
         });
@@ -127,6 +128,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
             case ACTION_MODIFY:
 
                 addQuestionPageIntent.putExtra("Question", questionSelected);
+                addQuestionPageIntent.putExtra("MCQ", currentMcq);
                 startActivity(addQuestionPageIntent);
 
                 break;

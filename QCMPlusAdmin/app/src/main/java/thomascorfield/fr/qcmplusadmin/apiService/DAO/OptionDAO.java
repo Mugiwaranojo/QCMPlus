@@ -39,12 +39,26 @@ public class OptionDAO implements IDAO<Option> {
             option.setObjectId(obj.getObjectId());
         }
         option.put("statement", obj.getStatement());
+        option.put("checked", obj.isChecked());
         option.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 listener.onApiResultListener(parseObjectToOption(option), e);
             }
         });
+    }
+
+    public void save(Option option, Question question){
+        ParseObject questionParse= ParseObject.createWithoutData("Question", question.getObjectId());
+        ParseObject optionParse =  new ParseObject("Option");
+        optionParse.put("statement", option.getStatement());
+        optionParse.put("checked", option.isChecked());
+        optionParse.put("question", questionParse);
+        try {
+            optionParse.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

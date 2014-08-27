@@ -12,6 +12,7 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.Model.MCQ;
 import thomascorfield.fr.qcmplusadmin.Model.Option;
 import thomascorfield.fr.qcmplusadmin.R;
 import thomascorfield.fr.qcmplusadmin.Model.Question;
@@ -32,6 +33,7 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
 
     private Intent intentFromMCQ;
     private Question currentQuestion;
+    private MCQ currentMcq;
 
     private Option option1;
     private Option option2;
@@ -54,6 +56,7 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
 
         intentFromMCQ = getIntent();
         currentQuestion  = (Question) intentFromMCQ.getSerializableExtra("Question");
+        currentMcq  = (MCQ) intentFromMCQ.getSerializableExtra("MCQ");
 
         if (currentQuestion.getStatement() == null) {
 
@@ -67,11 +70,11 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
 
             currentQuestion = new Question();
 
-            option1 = new Option("1");
-            option2 = new Option("2");
-            option3 = new Option("3");
-            option4 = new Option("4");
-            option5 = new Option("5");
+            option1 = new Option();
+            option2 = new Option();
+            option3 = new Option();
+            option4 = new Option();
+            option5 = new Option();
 
             ArrayList<Option> opts = new ArrayList<Option>();
             opts.add(option1);
@@ -94,6 +97,7 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
         }
 
         MCQServiceManager.getInstance(this).setQuestionListener(this);
+
         this.questionSaveBtn = (Button) findViewById(R.id.questionSaveBtn);
         this.questionSaveBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -108,17 +112,7 @@ public class QuestionSaveActivity extends Activity implements IAPIServiceResultL
                 currentQuestion.getOptions().get(3).setStatement(editTextOption4.getText().toString());
                 currentQuestion.getOptions().get(4).setStatement(editTextOption5.getText().toString());
 
-                MCQServiceManager.getInstance(getApplicationContext()).saveQuestion(currentQuestion);
-
-                for (int i = 0; i < 5; i++) {
-
-                    Option opt = currentQuestion.getOptions().get(i);
-
-                    if(opt.getStatement() != "") {
-
-                        MCQServiceManager.getInstance(getApplicationContext()).saveOption(opt);
-                    }
-                }
+                MCQServiceManager.getInstance(getApplicationContext()).saveQuestion(currentQuestion, currentMcq);
             }
         });
     }
