@@ -12,8 +12,16 @@
 
     <string name="myspace_chooseMCQ">Choisir un QCM</string>
     <string name="myspace_myMCQ">Mes QCM</string>
+
     <string name="login_spinner_title">Connection ...</string>
+    <string name="loading_spinner_title">Chargement ...</string>
     <string name="login_spinner_text">Veuillez patientez, ceci peut prendre quelques seconds.</string>
     <string name="login_toast_welcom">Bienvenue</string>
     <string name="login_toast_connection_failed">Identifiant ou mot de passe incorrect.</string>
+
+    <string name="list_cell_score_title">Title MCQ</string>
+    <string name="list_cell_score_description">description MCQ</string>
+    <string name="list_cell_score_value">Score value</string>
+    <string name="list_cell_title_text">Title Text</string>
+    <string name="list_cell_description_text">Description Text</string>
 </resources>

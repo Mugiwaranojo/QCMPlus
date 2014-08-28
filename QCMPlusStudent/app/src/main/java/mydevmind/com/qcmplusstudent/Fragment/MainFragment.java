@@ -1,10 +1,12 @@
 package mydevmind.com.qcmplusstudent.fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -12,47 +14,74 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import mydevmind.com.qcmplusstudent.MainActivity;
 import mydevmind.com.qcmplusstudent.R;
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.apiService.MCQServiceManager;
-import mydevmind.com.qcmplusstudent.model.MCQ;
+import mydevmind.com.qcmplusstudent.fragment.adapter.UserListUserMCQAdapter;
+import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
  * Created by Joan on 29/07/2014.
  */
-public class MainFragment extends Fragment implements IAPIServiceResultListener<ArrayList<MCQ>>{
+public class MainFragment extends Fragment implements IAPIServiceResultListener<ArrayList<UserMCQ>>{
 
     private LinearLayout selectAllMCQ;
     private ListView listViewMyMCQ;
-    private MyMCQAdapter adapter;
+    private UserListUserMCQAdapter adapter;
     private MCQServiceManager manager;
+    private ProgressDialog spinner;
+
+    private IFragmentActionListener listener;
+    public void setListener(IFragmentActionListener listener) {
+        this.listener = listener;
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_main, null);
 
-        manager = MCQServiceManager.getInstance(getActivity());
-        manager.setListMCQListener(this);
         selectAllMCQ = (LinearLayout) v.findViewById(R.id.LinearLayoutAllMCQ);
         selectAllMCQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                listener.onFragmentAction(MainActivity.ACTION_VIEW_ALLMCQ, null);
             }
         });
+
         listViewMyMCQ = (ListView) v.findViewById(R.id.listViewMyMCQ);
-        manager.fetchCurrentUserMCQ();
 
-        manager.getCurrentUser().getUserMCQs();
+        if(savedInstanceState==null) {
+            spinner = new ProgressDialog(getActivity());
+            spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            spinner.setTitle(getString(R.string.loading_spinner_title));
+            spinner.setMessage(getString(R.string.login_spinner_text));
+            spinner.setCancelable(false);
+            //spinner.show();
+
+            manager = MCQServiceManager.getInstance(getActivity());
+            manager.setListUserMCQListener(this);
+            //manager.fetchCurrentUserMCQDone();
+        }
         return v;
-
     }
 
 
+
+
     @Override
-    public void onApiResultListener(ArrayList<MCQ> mcqArrayList, ParseException e) {
-        adapter= new MyMCQAdapter(getActivity(), mcqArrayList);
+    public void onApiResultListener(final ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
+        spinner.dismiss();
+        adapter= new UserListUserMCQAdapter(getActivity(), userMCQArrayList);
         listViewMyMCQ.setAdapter(adapter);
+        listViewMyMCQ.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listener.onFragmentAction(MainActivity.ACTION_VIEW_MCQDONE, userMCQArrayList.get(i));
+            }
+        });
         listViewMyMCQ.invalidate();
     }
 }
