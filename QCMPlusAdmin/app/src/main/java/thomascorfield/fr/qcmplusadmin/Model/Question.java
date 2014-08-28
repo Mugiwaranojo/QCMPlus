@@ -66,6 +66,8 @@ public class Question implements Serializable {
                     Option o = new Option();
                     o.setStatement("Option Test" + (j + 1));
 
+                    if (j == 2) o.setChecked(true);
+
                     options.add(j, o);
                 }
 
