@@ -10,7 +10,7 @@ import java.util.Timer;
 public class UserMCQ implements Serializable{
 
 
-    public enum State {DONE, TODO, INPROGRESS};
+    public enum State {DONE, INPROGRESS};
 
     private String objectId;
     private User user;

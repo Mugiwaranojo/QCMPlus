@@ -1,17 +1,23 @@
 package mydevmind.com.qcmplusstudent.model;
 
-public class Option {
+import java.io.Serializable;
 
-    private String identifier;
+public class Option implements Serializable{
+
+    private String objectId;
     private String statement;
     private boolean checked;
 
-    public String getIdentifier() {
-        return identifier;
+    public Option(String objectId) {
+
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public boolean isChecked() {

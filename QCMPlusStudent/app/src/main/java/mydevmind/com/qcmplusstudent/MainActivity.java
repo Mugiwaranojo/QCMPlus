@@ -1,25 +1,34 @@
 package mydevmind.com.qcmplusstudent;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
+import mydevmind.com.qcmplusstudent.fragment.AllMCQFragment;
 import mydevmind.com.qcmplusstudent.fragment.IFragmentActionListener;
 import mydevmind.com.qcmplusstudent.fragment.LoginFragment;
+import mydevmind.com.qcmplusstudent.fragment.MCQDoneFragment;
+import mydevmind.com.qcmplusstudent.fragment.MCQFragment;
 import mydevmind.com.qcmplusstudent.fragment.MainFragment;
+import mydevmind.com.qcmplusstudent.model.MCQ;
+import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 
 public class MainActivity extends Activity implements IFragmentActionListener{
 
     public static final Integer ACTION_CONNECT=1905;
+    public static final Integer ACTION_VIEW_MCQDONE =1906;
+    public static final Integer ACTION_VIEW_ALLMCQ=1907;
+    public static final Integer ACTION_VIEW_MCQ=1908;
+
+    private Integer currentAction;
 
     private LoginFragment loginFragment;
     private MainFragment mainFragment;
+    private MCQDoneFragment mcqDoneFragment;
+    private AllMCQFragment allMCQFragment;
+    private MCQFragment mcqFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +48,55 @@ public class MainActivity extends Activity implements IFragmentActionListener{
         if(action.equals(ACTION_CONNECT)){
             if(mainFragment==null){
                 mainFragment= new MainFragment();
+                mainFragment.setListener(this);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, mainFragment)
                         .commit();
             }
+        }else if(action.equals(ACTION_VIEW_ALLMCQ)){
+            if(allMCQFragment==null){
+                allMCQFragment= new AllMCQFragment();
+                allMCQFragment.setListener(this);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, allMCQFragment)
+                        .commit();
+            }
+        }else if(action.equals(ACTION_VIEW_MCQDONE)){
+            if(obj instanceof UserMCQ){
+                UserMCQ userMCQ= (UserMCQ) obj;
+                mcqDoneFragment= new MCQDoneFragment();
+                mcqDoneFragment.setUserMCQ(userMCQ);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mcqDoneFragment)
+                        .commit();
+            }
+        }else if(action.equals(ACTION_VIEW_MCQ)){
+            if(obj instanceof MCQ){
+                MCQ mcq= (MCQ) obj;
+                mcqFragment= new MCQFragment();
+                mcqFragment.setCurrentMCQ(mcq);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mcqFragment)
+                        .commit();
+            }
+        }
+        currentAction= action;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(currentAction==ACTION_VIEW_MCQDONE){
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, mainFragment)
+                    .commit();
+        }else if(currentAction==ACTION_VIEW_MCQ){
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, allMCQFragment)
+                    .commit();
+        }else if(currentAction==ACTION_VIEW_ALLMCQ){
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, mainFragment)
+                    .commit();
         }
     }
 

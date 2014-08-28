@@ -1,16 +1,19 @@
 package mydevmind.com.qcmplusstudent.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
 
-public class UserMCQ {
+public class UserMCQ implements Serializable{
+
+
+    public enum State {DONE, INPROGRESS};
 
     private String objectId;
     private User user;
     private MCQ mcq;
-    private Timer timeSpent;
-    private Integer score;
+    private String state;
+    private Integer timeSpent;
     private ArrayList<UserAnswer> userAnswers;
     private Date dateCreated;
     private Date dateUpdated;
@@ -23,7 +26,6 @@ public class UserMCQ {
         this.objectId= objectId;
     }
 
-    public enum state {};
 
     public String getObjectId() {
         return objectId;
@@ -33,20 +35,32 @@ public class UserMCQ {
         this.objectId = objectId;
     }
 
-    public Timer getTimeSpent() {
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Integer getTimeSpent() {
         return timeSpent;
     }
 
-    public void setTimeSpent(Timer timeSpent) {
+    public void setTimeSpent(Integer timeSpent) {
         this.timeSpent = timeSpent;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
+    public String getScore()
+    {
+        String score="0/0";
+        int uScore=0;
+        int nbrQ=0;
+        for(UserAnswer userAnswer:userAnswers){
+            uScore+=userAnswer.getScore();
+            nbrQ++;
+        }
+        return uScore+"/"+nbrQ;
     }
 
     public Date getDateCreated() {
