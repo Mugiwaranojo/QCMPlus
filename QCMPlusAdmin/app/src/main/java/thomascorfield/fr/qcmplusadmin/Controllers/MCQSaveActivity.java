@@ -11,12 +11,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
+import thomascorfield.fr.qcmplusadmin.Model.Option;
 import thomascorfield.fr.qcmplusadmin.R;
 import thomascorfield.fr.qcmplusadmin.Controllers.adapter.QuestionAdapter;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
@@ -28,6 +30,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
 
     private EditText editTextTitle;
     private EditText editTextDescription;
+    private TextView listTitleTextView;
 
     private ListView listView;
     private Button addQuestionBtn;
@@ -50,6 +53,10 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
 
         this.editTextTitle = (EditText) findViewById(R.id.editTextName);
         this.editTextDescription = (EditText) findViewById(R.id.editTextDescription);
+        this.listTitleTextView = (TextView) findViewById(R.id.mcqSaveListTitle);
+
+        this.mcqSaveBtn = (Button) findViewById(R.id.mcqSaveBtn);
+        this.addQuestionBtn = (Button) findViewById(R.id.addQuestionBtn);
 
         intentFromMCQList = getIntent();
         currentMcq  = (MCQ) intentFromMCQList.getSerializableExtra("MCQ");
@@ -59,14 +66,48 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
             this.editTextTitle.setText("");
             this.editTextDescription.setText("");
 
+            this.addQuestionBtn.setVisibility(View.GONE);
+            this.listTitleTextView.setVisibility(View.GONE);
+
+            currentMcq = new MCQ();
+
         } else {
 
             this.editTextTitle.setText(currentMcq.getName());
             this.editTextDescription.setText(currentMcq.getDescription());
+
+            MCQServiceManager.getInstance(this).setListMCQQuestionListener(new IAPIServiceResultListener<ArrayList<Question>>() {
+                @Override
+                public void onApiResultListener(ArrayList<Question> obj, ParseException e) {
+
+                    questions = obj;
+                    listView = (ListView) findViewById(R.id.listView);
+                    QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), questions);
+                    listView.setAdapter(adapter);
+
+                    View.OnCreateContextMenuListener listener = new View.OnCreateContextMenuListener() {
+
+                        @Override
+                        public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+                            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
+
+                            Question questionSelected = questions.get(info.position);
+
+                            menu.setHeaderTitle(questionSelected.getStatement());
+                            menu.add(Menu.NONE, ACTION_MODIFY, 0, "Modifier");
+                            menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
+                        }
+                    };
+
+                    listView.setOnCreateContextMenuListener(listener);
+                }
+            });
+
+            MCQServiceManager.getInstance(getApplicationContext()).fetchMCQQuestions(currentMcq);
         }
 
         MCQServiceManager.getInstance(this).setMCQListener(this);
-        this.mcqSaveBtn = (Button) findViewById(R.id.mcqSaveBtn);
         this.mcqSaveBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -78,15 +119,7 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
             }
         });
 
-        this.questions = Question.getAllQuestions(10);
-
-        this.listView = (ListView) findViewById(R.id.listView);
-        QuestionAdapter adapter = new QuestionAdapter(this, questions);
-        this.listView.setAdapter(adapter);
-
         this.addQuestionPageIntent = new Intent(this, QuestionSaveActivity.class);
-
-        this.addQuestionBtn = (Button) findViewById(R.id.addQuestionBtn);
         this.addQuestionBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -97,23 +130,6 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
                 startActivity(addQuestionPageIntent);
             }
         });
-
-        View.OnCreateContextMenuListener listener = new View.OnCreateContextMenuListener() {
-
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
-
-                Question questionSelected = questions.get(info.position);
-
-                menu.setHeaderTitle(questionSelected.getStatement());
-                menu.add(Menu.NONE, ACTION_MODIFY, 0, "Modifier");
-                menu.add(Menu.NONE, ACTION_DELETE, 1, "Supprimer");
-            }
-        };
-
-        this.listView.setOnCreateContextMenuListener(listener);
     }
 
     @Override
@@ -135,7 +151,17 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
 
             case ACTION_DELETE:
 
-                Toast.makeText(this, "Supprimer", Toast.LENGTH_LONG).show();
+                MCQServiceManager.getInstance(this).setQuestionListener(new IAPIServiceResultListener<Question>() {
+                    @Override
+                    public void onApiResultListener(Question question, ParseException e) {
+
+                        MCQServiceManager.getInstance(getApplicationContext()).fetchMCQQuestions(currentMcq);
+                        Toast.makeText(getApplicationContext(), question.getStatement().toString() + " a été supprimée", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+                MCQServiceManager.getInstance(this).deleteQuestion(questionSelected);
                 break;
 
             default:
@@ -150,8 +176,12 @@ public class MCQSaveActivity extends Activity implements IAPIServiceResultListen
     public void onApiResultListener(MCQ obj, ParseException e) {
 
         if(obj!= null){
+
             Toast.makeText(this, "Questionnaire enregistré.", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, MCQListActivity.class));
+
+            Intent i = new Intent(this, MCQSaveActivity.class);
+            i.putExtra("MCQ", obj);
+            startActivity(i);
         }
     }
 }

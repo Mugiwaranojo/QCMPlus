@@ -1,5 +1,7 @@
 package thomascorfield.fr.qcmplusadmin.apiService.DAO;
 
+import android.util.Log;
+
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -49,8 +51,8 @@ public class OptionDAO implements IDAO<Option> {
     }
 
     public void save(Option option, Question question){
-        ParseObject questionParse= ParseObject.createWithoutData("Question", question.getObjectId());
-        ParseObject optionParse =  new ParseObject("Option");
+        ParseObject questionParse = ParseObject.createWithoutData("Question", question.getObjectId());
+        ParseObject optionParse = new ParseObject("Option");
         optionParse.put("statement", option.getStatement());
         optionParse.put("checked", option.isChecked());
         optionParse.put("question", questionParse);

@@ -42,6 +42,5 @@
     <string name="admin_title">Espace Administrateur</string>
     <string name="admin_user">Gestion des utilisateurs</string>
     <string name="admin_mcq">Gestion des questionnaires</string>
-    <string name="question_save_correct">Correct</string>
 
 </resources>

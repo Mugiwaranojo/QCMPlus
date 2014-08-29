@@ -122,6 +122,25 @@ public class QuestionDAO implements IDAO<Question> {
         return null;
     }
 
+    public void findByMCQ(MCQ mcq, final IAPIServiceResultListener<ArrayList<Question>> listener){
+        ParseObject pMCQ = ParseObject.createWithoutData("MCQ", mcq.getObjectId());
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
+        query.whereEqualTo("mcq", pMCQ);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                ArrayList<Question> questionArrayList= new ArrayList<Question>();
+                for(ParseObject obj: parseObjects){
+                    Question question= parseObjectToQuestion(obj);
+                    ArrayList<Option> options= OptionDAO.getInstance().findByQuestion(question);
+                    question.setOptions(options);
+                    questionArrayList.add(question);
+                }
+                listener.onApiResultListener(questionArrayList, e);
+            }
+        });
+    }
+
     public Question parseObjectToQuestion(ParseObject parseObject){
         Question question= new Question(parseObject.getObjectId());
         question.setStatement(parseObject.getString("statement"));

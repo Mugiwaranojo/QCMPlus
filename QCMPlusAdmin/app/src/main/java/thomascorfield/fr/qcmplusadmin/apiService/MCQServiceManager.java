@@ -116,6 +116,12 @@ public class MCQServiceManager {
         this.userListListener = userListListener;
     }
 
+    private IAPIServiceResultListener<ArrayList<Question>> listMCQQuestionListener;
+
+    public void setListMCQQuestionListener(IAPIServiceResultListener<ArrayList<Question>> listMCQQuestionListener) {
+        this.listMCQQuestionListener = listMCQQuestionListener;
+    }
+
     public void fetchAllUser(){
         UserDAO.getInstance().fetchAllUser(userListListener);
     }
@@ -138,6 +144,10 @@ public class MCQServiceManager {
         MCQDAO.getInstance().delete(mcq, mcqListener);
     }
 
+    public void fetchMCQQuestions(MCQ mcq){
+        QuestionDAO.getInstance().findByMCQ(mcq, listMCQQuestionListener);
+    }
+
     public void saveQuestion(final Question question, final MCQ mcq) {
         QuestionDAO.getInstance().save(question, mcq, new IAPIServiceResultListener<Question>() {
             @Override
@@ -146,7 +156,6 @@ public class MCQServiceManager {
                    for (int i = 0; i < 5; i++) {
                        Option opt = question.getOptions().get(i);
                        if (opt.getStatement() != "") {
-                           opt.setChecked(false);
                            OptionDAO.getInstance().save(opt, obj);
                        }
                    }
@@ -156,7 +165,27 @@ public class MCQServiceManager {
         });
     }
 
-    public void deleteQuestion(Question question){ QuestionDAO.getInstance().delete(question, questionListener); }
+    public void deleteQuestion(final Question question){
+        QuestionDAO.getInstance().delete(question, new IAPIServiceResultListener<Question>() {
+            @Override
+            public void onApiResultListener(Question obj, ParseException e) {
+                if(obj!=null){
+                    int len = question.getOptions().size();
+                    for (int i = 0; i < len; i++) {
+                        Option opt = question.getOptions().get(i);
+                        OptionDAO.getInstance().delete(opt, new IAPIServiceResultListener<Option>() {
+                            @Override
+                            public void onApiResultListener(Option obj, ParseException e) {
 
-    public void deleteOption(Option option){ OptionDAO.getInstance().delete(option, optionListener); }
+                            }
+                        });
+                    }
+                }
+                questionListener.onApiResultListener(question, e);
+            }
+    }); }
+
+    //public void deleteQuestion(Question question){ QuestionDAO.getInstance().delete(question, questionListener); }
+
+    //public void deleteOption(Option option){ OptionDAO.getInstance().delete(option, optionListener); }
 }
