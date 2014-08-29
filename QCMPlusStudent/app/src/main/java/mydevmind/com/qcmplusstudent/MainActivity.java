@@ -49,18 +49,18 @@ public class MainActivity extends Activity implements IFragmentActionListener{
             if(mainFragment==null){
                 mainFragment= new MainFragment();
                 mainFragment.setListener(this);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mainFragment)
-                        .commit();
             }
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, mainFragment)
+                    .commit();
         }else if(action.equals(ACTION_VIEW_ALLMCQ)){
             if(allMCQFragment==null){
                 allMCQFragment= new AllMCQFragment();
                 allMCQFragment.setListener(this);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, allMCQFragment)
-                        .commit();
             }
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, allMCQFragment)
+                    .commit();
         }else if(action.equals(ACTION_VIEW_MCQDONE)){
             if(obj instanceof UserMCQ){
                 UserMCQ userMCQ= (UserMCQ) obj;
@@ -75,6 +75,7 @@ public class MainActivity extends Activity implements IFragmentActionListener{
                 MCQ mcq= (MCQ) obj;
                 mcqFragment= new MCQFragment();
                 mcqFragment.setCurrentMCQ(mcq);
+                mcqFragment.setListener(this);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, mcqFragment)
                         .commit();
@@ -85,15 +86,12 @@ public class MainActivity extends Activity implements IFragmentActionListener{
 
     @Override
     public void onBackPressed() {
-        if(currentAction==ACTION_VIEW_MCQDONE){
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.container, mainFragment)
-                    .commit();
-        }else if(currentAction==ACTION_VIEW_MCQ){
+        if(currentAction==ACTION_VIEW_MCQ){
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, allMCQFragment)
                     .commit();
-        }else if(currentAction==ACTION_VIEW_ALLMCQ){
+            currentAction=ACTION_VIEW_ALLMCQ;
+        }else{
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, mainFragment)
                     .commit();

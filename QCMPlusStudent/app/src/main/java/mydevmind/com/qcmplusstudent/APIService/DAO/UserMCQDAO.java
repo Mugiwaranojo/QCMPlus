@@ -6,6 +6,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,13 @@ import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.model.MCQ;
 import mydevmind.com.qcmplusstudent.model.Question;
 import mydevmind.com.qcmplusstudent.model.User;
+import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
  * Created by Joan on 29/07/2014.
  */
-public class UserMCQDAO implements IDAO<UserMCQDAO> {
+public class UserMCQDAO implements IDAO<UserMCQ> {
 
     private static UserMCQDAO instance;
 
@@ -35,17 +37,46 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
     }
 
     @Override
-    public void save(UserMCQDAO obj, IAPIServiceResultListener<UserMCQDAO> listener) {
+    public void save(final UserMCQ obj, final IAPIServiceResultListener<UserMCQ> listener) {
+        obj.setState(UserMCQ.State.DONE.toString());
+        obj.setTimeSpent(30);
+        ParseObject pUser = ParseObject.createWithoutData("User", obj.getUser().getObjectId());
+        ParseObject pMCQ = ParseObject.createWithoutData("MCQ", obj.getMcq().getObjectId());
+        final ParseObject userMCQ =  new ParseObject("UserMCQ");
+        userMCQ.put("user", pUser);
+        userMCQ.put("mcq", pMCQ);
+        userMCQ.put("state", obj.getState());
+        userMCQ.put("timeSpent", obj.getTimeSpent());
+
+        int uScore=0;
+        int nbrQ=0;
+        for(UserAnswer userAnswer:obj.getUserAnswers()){
+            uScore+=userAnswer.getScore();
+            nbrQ++;
+        }
+        String score= uScore+"/"+nbrQ;
+        userMCQ.put("score", score);
+        userMCQ.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                UserMCQ savedUserMCQ= null;
+                savedUserMCQ = parseObjectToUserMCQ(userMCQ);
+                savedUserMCQ.setUserAnswers(obj.getUserAnswers());
+                for(UserAnswer userAnswer: obj.getUserAnswers()){
+                    UserAnswerDAO.getInstance().save(savedUserMCQ, userAnswer);
+                }
+                listener.onApiResultListener(savedUserMCQ, e);
+            }
+        });
+    }
+
+    @Override
+    public void delete(UserMCQ obj, IAPIServiceResultListener<UserMCQ> listener) {
 
     }
 
     @Override
-    public void delete(UserMCQDAO obj, IAPIServiceResultListener<UserMCQDAO> listener) {
-
-    }
-
-    @Override
-    public void find(UserMCQDAO obj, IAPIServiceResultListener<UserMCQDAO> listener) {
+    public void find(UserMCQ obj, IAPIServiceResultListener<UserMCQ> listener) {
 
     }
 
@@ -60,11 +91,7 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 ArrayList<UserMCQ> userMCQArrayList= new ArrayList<UserMCQ>();
                 for(ParseObject object: parseObjects){
-                    try {
-                        userMCQArrayList.add(parseObjectToUserMCQRelations(object, false));
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
+                    userMCQArrayList.add(parseObjectToUserMCQ(object));
                 }
                 listener.onApiResultListener(userMCQArrayList, e);
             }
@@ -74,26 +101,16 @@ public class UserMCQDAO implements IDAO<UserMCQDAO> {
     public static UserMCQ parseObjectToUserMCQ(ParseObject pObject){
         UserMCQ userMCQ= new UserMCQ(pObject.getObjectId());
         userMCQ.setUser(new User(pObject.getParseObject("user").getObjectId()));
-        userMCQ.setMcq(new MCQ(pObject.getParseObject("mcq").getObjectId()));
+        try {
+            userMCQ.setMcq(MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        };
         userMCQ.setState(pObject.getString("state"));
-        Time timeSpent= new Time();
         userMCQ.setTimeSpent((Integer) pObject.getNumber("timeSpent"));
+        userMCQ.setScore(pObject.getString("score"));
         userMCQ.setDateCreated(pObject.getCreatedAt());
         userMCQ.setDateUpdated(pObject.getUpdatedAt());
         return userMCQ;
-    }
-
-    public static UserMCQ parseObjectToUserMCQRelations(ParseObject pObject, boolean withUser) throws ParseException {
-        UserMCQ userMCQ= parseObjectToUserMCQ(pObject);
-        if(withUser) {
-            User user= UserDAO.parseObjectToUser(pObject.getParseObject("user").fetchIfNeeded());
-            userMCQ.setUser(user);
-        }else {
-            MCQ mcq= MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded());
-            ArrayList<Question> questions= QuestionDAO.getInstance().findByMCQ(mcq);
-            mcq.setQuestions(questions);
-            userMCQ.setMcq(mcq);
-        }
-        return  userMCQ;
     }
 }

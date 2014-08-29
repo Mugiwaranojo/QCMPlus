@@ -13,6 +13,7 @@ public class UserMCQ implements Serializable{
     private User user;
     private MCQ mcq;
     private String state;
+    private String score;
     private Integer timeSpent;
     private ArrayList<UserAnswer> userAnswers;
     private Date dateCreated;
@@ -51,16 +52,12 @@ public class UserMCQ implements Serializable{
         this.timeSpent = timeSpent;
     }
 
-    public String getScore()
-    {
-        String score="0/0";
-        int uScore=0;
-        int nbrQ=0;
-        for(UserAnswer userAnswer:userAnswers){
-            uScore+=userAnswer.getScore();
-            nbrQ++;
-        }
-        return uScore+"/"+nbrQ;
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public Date getDateCreated() {

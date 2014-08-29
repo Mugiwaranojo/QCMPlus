@@ -59,17 +59,25 @@ public class MainFragment extends Fragment implements IAPIServiceResultListener<
             spinner.setTitle(getString(R.string.loading_spinner_title));
             spinner.setMessage(getString(R.string.login_spinner_text));
             spinner.setCancelable(false);
-            //spinner.show();
+            spinner.show();
 
             manager = MCQServiceManager.getInstance(getActivity());
             manager.setListUserMCQListener(this);
-            //manager.fetchCurrentUserMCQDone();
+            manager.fetchCurrentUserMCQDone();
         }
         return v;
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectAllMCQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onFragmentAction(MainActivity.ACTION_VIEW_ALLMCQ, null);
+            }
+        });
+    }
 
     @Override
     public void onApiResultListener(final ArrayList<UserMCQ> userMCQArrayList, ParseException e) {

@@ -24,4 +24,7 @@
     <string name="list_cell_score_value">Score value</string>
     <string name="list_cell_title_text">Title Text</string>
     <string name="list_cell_description_text">Description Text</string>
+    <string name="buttonPrevious"><![CDATA[<]]></string>
+    <string name="buttonNext"><![CDATA[>]]></string>
+    <string name="buttonSaveUserMCQ">Enregistrer</string>
 </resources>

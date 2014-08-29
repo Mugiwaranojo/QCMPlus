@@ -21,7 +21,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/titleListScoreTextView"
-                android:textColor="#2F7C80"
+                android:textColor="#5C4875"
                 android:text="@string/list_cell_score_title"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/descriptionListScoreTextView"
                 android:text="@string/list_cell_score_description"
-                android:textColor="#2F7C80"
+                android:textColor="#5C4875"
                 android:textSize="15sp"/>
 
         </LinearLayout>
@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:id="@+id/scoreListScoreTextView"
-            android:textColor="#2F7C80"
+            android:textColor="#5C4875"
             android:text="@string/list_cell_score_value"
             android:gravity="center"
             android:textStyle="bold"

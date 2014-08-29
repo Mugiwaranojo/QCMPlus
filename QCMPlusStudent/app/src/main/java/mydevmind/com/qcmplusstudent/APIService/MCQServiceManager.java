@@ -72,17 +72,6 @@ public class MCQServiceManager {
         UserMCQDAO.getInstance().findByUserStateDone(getCurrentUser(), new IAPIServiceResultListener<ArrayList<UserMCQ>>() {
             @Override
             public void onApiResultListener(ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
-                for (UserMCQ userMCQ : userMCQArrayList) {
-                    ArrayList<UserAnswer> userAnswers = UserAnswerDAO.getInstance().findByUserMCQ(userMCQ);
-                    for (UserAnswer userAnswer : userAnswers) {
-                        for (Question question : userMCQ.getMcq().getQuestions()) {
-                            if (userAnswer.getQuestion().getObjectId().equals(question.getObjectId())) {
-                                userAnswer.getQuestion().setOptions(question.getOptions());
-                            }
-                        }
-                    }
-                    userMCQ.setUserAnswers(userAnswers);
-                }
                 getCurrentUser().setUserMCQs(userMCQArrayList);
                 listUserMCQListener.onApiResultListener(userMCQArrayList, e);
             }
@@ -99,27 +88,24 @@ public class MCQServiceManager {
         MCQDAO.getInstance().fetchAllMCQ(new IAPIServiceResultListener<ArrayList<MCQ>>() {
             @Override
             public void onApiResultListener(final ArrayList<MCQ> allMCQ, ParseException e) {
-                /*UserMCQDAO.getInstance().findByUserStateDone(getCurrentUser(), new IAPIServiceResultListener<ArrayList<UserMCQ>>() {
-                    @Override
-                    public void onApiResultListener(ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
-                        ArrayList<MCQ> mcqs= new ArrayList<MCQ>();
-                        for(MCQ mcq: allMCQ){
-                            boolean find=false;
-                            for(UserMCQ userMCQ: userMCQArrayList){
-                                if(mcq.getObjectId().equals(userMCQ.getMcq().getObjectId())){
-                                    find=true;
-                                }
-                            }
-                            if(!find){
-                                mcqs.add(mcq);
-                            }
-                        }
-                        listMCQListener.onApiResultListener(mcqs, e);
+                ArrayList<MCQ> allMCQWithoutUserMCQ= new ArrayList<MCQ>();
+                for(MCQ mcq : allMCQ){
+                    if(!mcqIsAlreadyAnswer(mcq)){
+                        allMCQWithoutUserMCQ.add(mcq);
                     }
-                });*/
-                listMCQListener.onApiResultListener(allMCQ, e);
+                }
+                listMCQListener.onApiResultListener(allMCQWithoutUserMCQ, e);
             }
         });
+    }
+
+    private boolean mcqIsAlreadyAnswer(MCQ mcq){
+        for(UserMCQ userMCQ: getCurrentUser().getUserMCQs()){
+            if(userMCQ.getMcq().getObjectId().equals(mcq.getObjectId())){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -131,5 +117,25 @@ public class MCQServiceManager {
 
     public void fetchMCQQuestions(MCQ mcq){
         QuestionDAO.getInstance().findByMCQ(mcq, listMCQQuestionListener);
+    }
+
+    private IAPIServiceResultListener<UserMCQ> userMCQListener;
+
+    public void setUserMCQListener(IAPIServiceResultListener<UserMCQ> userMCQListener) {
+        this.userMCQListener = userMCQListener;
+    }
+
+    public void saveUserMCQ(UserMCQ userMCQ){
+        UserMCQDAO.getInstance().save(userMCQ, userMCQListener);
+    }
+
+    private IAPIServiceResultListener<ArrayList<UserAnswer>> listUserAnswerListener;
+
+    public void setlistUserAnswerListener(IAPIServiceResultListener<ArrayList<UserAnswer>> listUserAnswerListener) {
+        this.listUserAnswerListener = listUserAnswerListener;
+    }
+
+    public void fetchUserAnswers(UserMCQ userMCQ){
+        UserAnswerDAO.getInstance().findByUserMCQ(userMCQ, listUserAnswerListener);
     }
 }

@@ -9,7 +9,7 @@ public class Option implements Serializable{
     private boolean checked;
 
     public Option(String objectId) {
-
+        this.objectId= objectId;
     }
 
     public String getObjectId() {
