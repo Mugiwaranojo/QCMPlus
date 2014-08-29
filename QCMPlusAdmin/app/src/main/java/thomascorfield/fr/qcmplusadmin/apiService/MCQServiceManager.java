@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 
@@ -184,8 +183,4 @@ public class MCQServiceManager {
                 questionListener.onApiResultListener(question, e);
             }
     }); }
-
-    //public void deleteQuestion(Question question){ QuestionDAO.getInstance().delete(question, questionListener); }
-
-    //public void deleteOption(Option option){ OptionDAO.getInstance().delete(option, optionListener); }
 }

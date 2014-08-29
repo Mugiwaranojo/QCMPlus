@@ -18,7 +18,6 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
-import thomascorfield.fr.qcmplusadmin.Model.Option;
 import thomascorfield.fr.qcmplusadmin.R;
 import thomascorfield.fr.qcmplusadmin.Controllers.adapter.QuestionAdapter;
 import thomascorfield.fr.qcmplusadmin.Model.MCQ;
