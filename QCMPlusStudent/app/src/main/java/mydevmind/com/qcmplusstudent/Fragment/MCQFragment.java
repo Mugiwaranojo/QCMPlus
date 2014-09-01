@@ -179,18 +179,14 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
             }
         }
         if(currentQuestionID==0){
-            buttonPrevious.setEnabled(false);
-            buttonNext.setEnabled(true);
+            buttonPrevious.setVisibility(View.INVISIBLE);
+            buttonNext.setVisibility(View.VISIBLE);
         }else if(currentQuestionID==currentMCQ.getQuestions().size()-1){
-            buttonPrevious.setEnabled(true);
-            buttonNext.setEnabled(false);
-            if(userMCQ.getUserAnswers().size()==currentMCQ.getQuestions().size()) {
-                buttonSaveMCQ.setVisibility(View.VISIBLE);
-            }
+            buttonPrevious.setVisibility(View.VISIBLE);
+            buttonNext.setVisibility(View.INVISIBLE);
         }else{
-            buttonPrevious.setEnabled(true);
-            buttonNext.setEnabled(true);
-            buttonSaveMCQ.setVisibility(View.INVISIBLE);
+            buttonPrevious.setVisibility(View.VISIBLE);
+            buttonNext.setVisibility(View.VISIBLE);
         }
 
         int nbr= currentQuestionID+1;
