@@ -1,6 +1,8 @@
 package mydevmind.com.qcmplusstudent;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,25 +23,25 @@ public class MainActivity extends Activity implements IFragmentActionListener{
     public static final Integer ACTION_VIEW_MCQDONE =1906;
     public static final Integer ACTION_VIEW_ALLMCQ=1907;
     public static final Integer ACTION_VIEW_MCQ=1908;
+    public static final Integer ACTION_VIEW_MAIN=1909;
 
     private Integer currentAction;
 
-    private LoginFragment loginFragment;
     private MainFragment mainFragment;
-    private MCQDoneFragment mcqDoneFragment;
     private AllMCQFragment allMCQFragment;
-    private MCQFragment mcqFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            loginFragment= new LoginFragment();
+            LoginFragment loginFragment = new LoginFragment();
             loginFragment.setListener(this);
             getFragmentManager().beginTransaction()
                     .add(R.id.container, loginFragment)
                     .commit();
+
+            currentAction=ACTION_VIEW_MAIN;
         }
     }
 
@@ -64,7 +66,7 @@ public class MainActivity extends Activity implements IFragmentActionListener{
         }else if(action.equals(ACTION_VIEW_MCQDONE)){
             if(obj instanceof UserMCQ){
                 UserMCQ userMCQ= (UserMCQ) obj;
-                mcqDoneFragment= new MCQDoneFragment();
+                MCQDoneFragment mcqDoneFragment = new MCQDoneFragment();
                 mcqDoneFragment.setUserMCQ(userMCQ);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, mcqDoneFragment)
@@ -73,7 +75,7 @@ public class MainActivity extends Activity implements IFragmentActionListener{
         }else if(action.equals(ACTION_VIEW_MCQ)){
             if(obj instanceof MCQ){
                 MCQ mcq= (MCQ) obj;
-                mcqFragment= new MCQFragment();
+                MCQFragment mcqFragment = new MCQFragment();
                 mcqFragment.setCurrentMCQ(mcq);
                 mcqFragment.setListener(this);
                 getFragmentManager().beginTransaction()
@@ -86,15 +88,32 @@ public class MainActivity extends Activity implements IFragmentActionListener{
 
     @Override
     public void onBackPressed() {
-        if(currentAction==ACTION_VIEW_MCQ){
+        if(currentAction.equals(ACTION_VIEW_MCQ)) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, allMCQFragment)
                     .commit();
-            currentAction=ACTION_VIEW_ALLMCQ;
+            currentAction = ACTION_VIEW_ALLMCQ;
+
+        }else  if(currentAction.equals(ACTION_VIEW_MAIN)){
+            new AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(R.string.quit)
+            .setMessage(R.string.really_quit)
+            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Stop the activity
+                    MainActivity.this.finish();
+                }
+
+            })
+            .setNegativeButton(R.string.no, null)
+            .show();
         }else{
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, mainFragment)
                     .commit();
+            currentAction=ACTION_VIEW_MAIN;
         }
     }
 
@@ -111,10 +130,7 @@ public class MainActivity extends Activity implements IFragmentActionListener{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
 

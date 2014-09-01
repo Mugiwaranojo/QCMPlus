@@ -22,13 +22,12 @@ import mydevmind.com.qcmplusstudent.fragment.adapter.MCQAdapter;
 import mydevmind.com.qcmplusstudent.model.MCQ;
 
 /**
- * Created by Joan on 29/07/2014.
+ * AllMCQFragment
+ * Fragments de la listes de tous les MCQ non repondus par l'utilisateur
  */
 public class AllMCQFragment extends Fragment implements IAPIServiceResultListener<ArrayList<MCQ>>{
 
     private ListView listViewMCQ;
-    private MCQAdapter adapter;
-    private MCQServiceManager manager;
     private ProgressDialog spinner;
 
     private IFragmentActionListener listener;
@@ -41,10 +40,8 @@ public class AllMCQFragment extends Fragment implements IAPIServiceResultListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_all_mcq, null);
-
         listViewMCQ = (ListView) v.findViewById(R.id.listViewAllMCQ);
         return v;
-
     }
 
     @Override
@@ -58,7 +55,7 @@ public class AllMCQFragment extends Fragment implements IAPIServiceResultListene
         spinner.setCancelable(false);
         spinner.show();
 
-        manager = MCQServiceManager.getInstance(getActivity());
+        MCQServiceManager manager = MCQServiceManager.getInstance(getActivity());
         manager.setListMCQListener(this);
         manager.fetchAllMCQ();
 
@@ -67,7 +64,7 @@ public class AllMCQFragment extends Fragment implements IAPIServiceResultListene
     @Override
     public void onApiResultListener(final ArrayList<MCQ> mcqArrayList, ParseException e) {
         spinner.dismiss();
-        adapter= new MCQAdapter(getActivity(), mcqArrayList);
+        MCQAdapter adapter = new MCQAdapter(getActivity(), mcqArrayList);
         listViewMCQ.setAdapter(adapter);
         listViewMCQ.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

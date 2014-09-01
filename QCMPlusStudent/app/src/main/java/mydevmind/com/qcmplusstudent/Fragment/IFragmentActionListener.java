@@ -1,7 +1,8 @@
 package mydevmind.com.qcmplusstudent.fragment;
 
 /**
- * Created by Joan on 21/07/2014.
+ * IFragmentActionListener
+ * Interface des Listener pour l'intéraction entre les différents fragments
  */
 public interface IFragmentActionListener {
 

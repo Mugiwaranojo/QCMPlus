@@ -1,6 +1,8 @@
 package mydevmind.com.qcmplusstudent.fragment.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,8 @@ import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 01/08/2014.
+ * UserMCQAdapter
+ * Adapter pour la consultation des reponses de l'utilisateurs
  */
 public class UserMCQAdapter extends BaseExpandableListAdapter {
 
@@ -69,9 +72,12 @@ public class UserMCQAdapter extends BaseExpandableListAdapter {
         Question question= (Question) getGroup(i);
         TextView textViewStatement= (TextView)v.findViewById(R.id.textViewListQuestion);
         textViewStatement.setText(question.getStatement());
+        ImageView imageView= (ImageView) v.findViewById(R.id.imageViewListQuestion);
         if(!userHasGoodAnswerQuestion(question)){
-            ImageView imageView= (ImageView) v.findViewById(R.id.imageViewListQuestion);
-            imageView.setImageResource(android.R.drawable.ic_menu_delete);
+            imageView.setImageResource(android.R.drawable.ic_delete);
+            imageView.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        }else{
+            imageView.setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         }
         return v;
     }
@@ -86,9 +92,12 @@ public class UserMCQAdapter extends BaseExpandableListAdapter {
         textViewStatement.setText(option.getStatement());
         ImageView imageView= (ImageView) v.findViewById(R.id.imageViewListQuestion);
         if(isUserAnswer(question, option) && !question.validOption().getStatement().equals(option.getStatement())){
-            imageView.setImageResource(android.R.drawable.ic_menu_delete);
+            imageView.setImageResource(android.R.drawable.ic_delete);
+            imageView.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         }else if(!question.validOption().getStatement().equals(option.getStatement())){
             imageView.setVisibility(View.INVISIBLE);
+        }else{
+            imageView.setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         }
         return v;
     }
@@ -101,10 +110,7 @@ public class UserMCQAdapter extends BaseExpandableListAdapter {
     private boolean userHasGoodAnswerQuestion(Question question){
         for(UserAnswer userAnswer: userMCQ.getUserAnswers()){
             if(userAnswer.getQuestion().getObjectId().equals(question.getObjectId())){
-                if(userAnswer.getScore()==1){
-                    return true;
-                }
-                return false;
+                return userAnswer.getScore() == 1;
             }
         }
         return false;
@@ -113,10 +119,7 @@ public class UserMCQAdapter extends BaseExpandableListAdapter {
     private boolean isUserAnswer(Question question, Option option){
         for(UserAnswer userAnswer: userMCQ.getUserAnswers()){
             if(userAnswer.getQuestion().getObjectId().equals(question.getObjectId())){
-                if(userAnswer.getAnswer().getStatement().equals(option)){
-                    return true;
-                }
-                return false;
+                return userAnswer.getAnswer().getStatement().equals(option.getStatement());
             }
         }
         return false;

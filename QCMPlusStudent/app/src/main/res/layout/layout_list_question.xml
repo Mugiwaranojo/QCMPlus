@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Question 1"
+        android:paddingLeft="25dp"
         android:textColor="@android:color/white"
         android:id="@+id/textViewListQuestion" />
 

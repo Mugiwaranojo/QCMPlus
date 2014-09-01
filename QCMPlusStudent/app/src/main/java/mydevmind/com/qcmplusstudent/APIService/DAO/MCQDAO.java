@@ -12,11 +12,10 @@ import java.util.List;
 
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.model.MCQ;
-import mydevmind.com.qcmplusstudent.model.Question;
 
 
 /**
- * Created by Joan on 29/07/2014.
+ * DAO du Model MCQ
  */
 public class MCQDAO implements IDAO<MCQ> {
 
@@ -87,22 +86,6 @@ public class MCQDAO implements IDAO<MCQ> {
                }
             }
         });
-    }
-
-    public MCQ find(String objectId){
-        try {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("MCQ");
-            query.whereEqualTo("objectId", objectId);
-            List<ParseObject> results= query.find();
-            if(results.size()==1){
-                return parseObjectToMCQ(results.get(0));
-            }else{
-                return null;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void fetchAllMCQ(final IAPIServiceResultListener<ArrayList<MCQ>> listener){

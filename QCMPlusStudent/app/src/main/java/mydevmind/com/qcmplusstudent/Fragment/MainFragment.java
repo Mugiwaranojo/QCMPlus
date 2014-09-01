@@ -22,14 +22,13 @@ import mydevmind.com.qcmplusstudent.fragment.adapter.UserListUserMCQAdapter;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 29/07/2014.
+ * MainFragment
+ * Fragment page principale de l'utilisateur
  */
 public class MainFragment extends Fragment implements IAPIServiceResultListener<ArrayList<UserMCQ>>{
 
     private LinearLayout selectAllMCQ;
     private ListView listViewMyMCQ;
-    private UserListUserMCQAdapter adapter;
-    private MCQServiceManager manager;
     private ProgressDialog spinner;
 
     private IFragmentActionListener listener;
@@ -61,7 +60,7 @@ public class MainFragment extends Fragment implements IAPIServiceResultListener<
             spinner.setCancelable(false);
             spinner.show();
 
-            manager = MCQServiceManager.getInstance(getActivity());
+            MCQServiceManager manager = MCQServiceManager.getInstance(getActivity());
             manager.setListUserMCQListener(this);
             manager.fetchCurrentUserMCQDone();
         }
@@ -82,7 +81,7 @@ public class MainFragment extends Fragment implements IAPIServiceResultListener<
     @Override
     public void onApiResultListener(final ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
         spinner.dismiss();
-        adapter= new UserListUserMCQAdapter(getActivity(), userMCQArrayList);
+        UserListUserMCQAdapter adapter = new UserListUserMCQAdapter(getActivity(), userMCQArrayList);
         listViewMyMCQ.setAdapter(adapter);
         listViewMyMCQ.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

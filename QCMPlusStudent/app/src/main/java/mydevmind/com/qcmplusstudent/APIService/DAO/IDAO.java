@@ -3,7 +3,8 @@ package mydevmind.com.qcmplusstudent.apiService.DAO;
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 
 /**
- * Created by Joan on 29/07/2014.
+ * Interface DAO
+ * Comportements d'échange avec parse.com pour les différents Models métiers
  */
 public interface IDAO<T> {
 

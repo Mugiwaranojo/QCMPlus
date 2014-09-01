@@ -13,7 +13,8 @@ import mydevmind.com.qcmplusstudent.R;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 31/07/2014.
+ * UserListUserMCQAdapter
+ * Adapter pour la ListView des MCQ repondus par l'utilisateur
  */
 public class UserListUserMCQAdapter extends BaseAdapter {
 

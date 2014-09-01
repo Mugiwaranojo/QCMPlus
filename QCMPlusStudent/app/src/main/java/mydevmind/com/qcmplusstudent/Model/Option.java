@@ -16,10 +16,6 @@ public class Option implements Serializable{
         return objectId;
     }
 
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
-    }
-
     public boolean isChecked() {
         return checked;
     }

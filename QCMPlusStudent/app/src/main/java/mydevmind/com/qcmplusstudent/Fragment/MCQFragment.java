@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
@@ -25,15 +25,12 @@ import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 28/08/2014.
+ * MCQFragment
+ * Fragment perméttant à l'utilisateur de répondre à un questionnaire
  */
 public class MCQFragment extends Fragment implements IAPIServiceResultListener<ArrayList<Question>>, View.OnClickListener {
 
     private MCQ currentMCQ;
-
-    public MCQ getCurrentMCQ() {
-        return currentMCQ;
-    }
 
     public void setCurrentMCQ(MCQ currentMCQ) {
         this.currentMCQ = currentMCQ;
@@ -44,6 +41,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     private Integer currentQuestionID;
     private MCQServiceManager manager;
     private ProgressDialog spinner;
+    private ScrollView scrollView;
 
     public void setListener(IFragmentActionListener listener) {
         this.listener = listener;
@@ -61,7 +59,6 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mcq, null);
-
 
         spinner = new ProgressDialog(getActivity());
         spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -127,6 +124,9 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
             }
         });
         buttonSaveMCQ.setVisibility(View.INVISIBLE);
+
+        scrollView= (ScrollView) v.findViewById(R.id.scrollViewMCQ);
+        scrollView.setVisibility(View.INVISIBLE);
         return v;
     }
 
@@ -202,6 +202,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     @Override
     public void onApiResultListener(ArrayList<Question> obj, ParseException e) {
         spinner.dismiss();
+        scrollView.setVisibility(View.VISIBLE);
         currentMCQ.setQuestions(obj);
         userMCQ.getMcq().setQuestions(obj);
         loadQuestion();

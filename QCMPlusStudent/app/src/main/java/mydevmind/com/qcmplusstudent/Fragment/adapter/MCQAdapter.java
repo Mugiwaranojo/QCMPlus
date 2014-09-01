@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import mydevmind.com.qcmplusstudent.R;
 import mydevmind.com.qcmplusstudent.model.MCQ;
 
+/**
+ * MCQAdapter
+ * Adapter pour la ListView des MCQ non repondus par l'utilisateur
+ */
 public class MCQAdapter extends BaseAdapter {
 
     private ArrayList<MCQ> mcqs;

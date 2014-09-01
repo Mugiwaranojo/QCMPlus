@@ -17,7 +17,7 @@ import mydevmind.com.qcmplusstudent.model.Question;
 
 
 /**
- * Created by Joan on 31/07/2014.
+ * DAO du Model Question
  */
 public class QuestionDAO implements IDAO<Question> {
 
@@ -85,26 +85,6 @@ public class QuestionDAO implements IDAO<Question> {
                 }
             }
         });
-    }
-
-    public ArrayList<Question> findByMCQ(MCQ mcq){
-        ArrayList<Question> questionArrayList= new ArrayList<Question>();
-        ParseObject pMCQ = ParseObject.createWithoutData("MCQ", mcq.getObjectId());
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
-        query.whereEqualTo("mcq", pMCQ);
-        try {
-            List<ParseObject> results= query.find();
-            for (ParseObject pObj: results){
-                Question question= parseObjectToQuestion(pObj);
-                ArrayList<Option> options= OptionDAO.getInstance().findByQuestion(question);
-                question.setOptions(options);
-                questionArrayList.add(question);
-            }
-            return questionArrayList;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void findByMCQ(MCQ mcq, final IAPIServiceResultListener<ArrayList<Question>> listener){

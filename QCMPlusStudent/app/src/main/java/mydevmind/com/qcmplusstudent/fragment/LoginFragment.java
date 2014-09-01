@@ -2,6 +2,8 @@ package mydevmind.com.qcmplusstudent.fragment;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,8 @@ import mydevmind.com.qcmplusstudent.model.User;
 import mydevmind.com.qcmplusstudent.R;
 
 /**
- * Created by Joan on 28/07/2014.
+ * LoginFragment
+ * Fragment de connection de l'utilisateur
  */
 public class LoginFragment extends Fragment implements IAPIServiceResultListener<User>{
 
@@ -33,6 +36,8 @@ public class LoginFragment extends Fragment implements IAPIServiceResultListener
 
     private MCQServiceManager manager;
     private ProgressDialog spinner;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,13 +52,21 @@ public class LoginFragment extends Fragment implements IAPIServiceResultListener
         spinner.setMessage(getString(R.string.login_spinner_text));
         spinner.setCancelable(false);
 
+        sharedPreferences= getActivity().getSharedPreferences("Login MCQ", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         loginField = (EditText) v.findViewById(R.id.editTextConnectLogin);
+        loginField.setText(sharedPreferences.getString("login", ""));
         passwordField= (EditText) v.findViewById(R.id.editTextConnectPassword);
+        passwordField.setText(sharedPreferences.getString("password", ""));
         Button loginButton = (Button) v.findViewById(R.id.buttonConnect);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 spinner.show();
+                editor.putString("login", loginField.getText().toString());
+                editor.putString("password", passwordField.getText().toString());
+                editor.commit();
                 manager.connect(loginField.getText().toString(), passwordField.getText().toString());
             }
         });

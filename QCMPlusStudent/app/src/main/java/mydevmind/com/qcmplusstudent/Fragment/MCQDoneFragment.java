@@ -2,7 +2,6 @@ package mydevmind.com.qcmplusstudent.fragment;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,16 +22,12 @@ import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 01/08/2014.
+ * MCQDoneFragment
+ * Fragment de consulation d'un MCQ répondu par l'utilisateur
  */
 public class MCQDoneFragment extends Fragment{
 
     private UserMCQ userMCQ;
-
-    private TextView textViewTitle;
-    private TextView textViewScore;
-    private TextView textViewDate;
-    private TextView textViewTime;
 
     private ExpandableListView listViewQuestions;
     private UserMCQAdapter adapter;
@@ -46,13 +41,13 @@ public class MCQDoneFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_user_mcq, null);
 
-        textViewTitle= (TextView) v.findViewById(R.id.textViewUserMCQTitle);
+        TextView textViewTitle = (TextView) v.findViewById(R.id.textViewUserMCQTitle);
         textViewTitle.setText(userMCQ.getMcq().getName());
-        textViewScore= (TextView) v.findViewById(R.id.textViewUserMCQScore);
+        TextView textViewScore = (TextView) v.findViewById(R.id.textViewUserMCQScore);
         textViewScore.setText(userMCQ.getScore());
-        textViewDate= (TextView) v.findViewById(R.id.textViewUserMCQDate);
+        TextView textViewDate = (TextView) v.findViewById(R.id.textViewUserMCQDate);
         textViewDate.setText(userMCQ.getDateCreated().toLocaleString());
-        textViewTime= (TextView) v.findViewById(R.id.textViewUserMCQTimeSpent);
+        TextView textViewTime = (TextView) v.findViewById(R.id.textViewUserMCQTimeSpent);
         textViewTime.setText(userMCQ.getTimeSpent().toString());
 
         listViewQuestions = (ExpandableListView) v.findViewById(R.id.expandableListView);

@@ -15,15 +15,11 @@ import mydevmind.com.qcmplusstudent.model.Option;
 import mydevmind.com.qcmplusstudent.model.Question;
 
 /**
- * Created by Joan on 31/07/2014.
+ * DAO du Model Option
  */
 public class OptionDAO implements IDAO<Option> {
 
     private static OptionDAO instance;
-
-    private OptionDAO(){
-
-    }
 
     public static OptionDAO getInstance(){
         if(instance==null){

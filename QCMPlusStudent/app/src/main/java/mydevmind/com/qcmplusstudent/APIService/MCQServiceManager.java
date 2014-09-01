@@ -19,7 +19,8 @@ import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 29/07/2014.
+ * MCQServiceManager
+ * Service de recherche et sauvegarde des données en base
  */
 public class MCQServiceManager {
 
@@ -27,7 +28,6 @@ public class MCQServiceManager {
     private static final String APP_ID="1XpHvksxkUpokKjgKINeQuzwCUAAkyFpwRHBZTz3";
     private static final String CLIENT_KEY="pJFS5zqqaBKosNs69n1MQxV8kVSta0y3c0NrRUJW";
 
-    private Context context;
     private static MCQServiceManager instance;
     private User currentUser;
 
@@ -40,7 +40,6 @@ public class MCQServiceManager {
     }
 
     private MCQServiceManager(Context context){
-        this.context= context;
         Parse.initialize(context, APP_ID, CLIENT_KEY);
     }
 
@@ -58,8 +57,8 @@ public class MCQServiceManager {
     }
 
     public void connect(String login, String password){
-        //UserDAO.getInstance().findByUserPassword(login, password, userListener);
-        UserDAO.getInstance().findByUserPassword("gbrunier", "0000", userListener);
+        UserDAO.getInstance().findByUserPassword(login, password, userListener);
+        //UserDAO.getInstance().findByUserPassword("gbrunier", "0000", userListener);
     }
 
     private IAPIServiceResultListener<ArrayList<UserMCQ>> listUserMCQListener;

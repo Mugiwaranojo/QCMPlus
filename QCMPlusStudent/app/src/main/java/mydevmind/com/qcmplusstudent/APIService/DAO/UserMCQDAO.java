@@ -1,7 +1,4 @@
 package mydevmind.com.qcmplusstudent.apiService.DAO;
-
-import android.text.format.Time;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -12,14 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
-import mydevmind.com.qcmplusstudent.model.MCQ;
-import mydevmind.com.qcmplusstudent.model.Question;
 import mydevmind.com.qcmplusstudent.model.User;
 import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 29/07/2014.
+ * DAO du Model UserMCQ
  */
 public class UserMCQDAO implements IDAO<UserMCQ> {
 
@@ -59,8 +54,7 @@ public class UserMCQDAO implements IDAO<UserMCQ> {
         userMCQ.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                UserMCQ savedUserMCQ= null;
-                savedUserMCQ = parseObjectToUserMCQ(userMCQ);
+                UserMCQ savedUserMCQ= parseObjectToUserMCQ(userMCQ);
                 savedUserMCQ.setUserAnswers(obj.getUserAnswers());
                 for(UserAnswer userAnswer: obj.getUserAnswers()){
                     UserAnswerDAO.getInstance().save(savedUserMCQ, userAnswer);
@@ -105,7 +99,7 @@ public class UserMCQDAO implements IDAO<UserMCQ> {
             userMCQ.setMcq(MCQDAO.parseObjectToMCQ(pObject.getParseObject("mcq").fetchIfNeeded()));
         } catch (ParseException e) {
             e.printStackTrace();
-        };
+        }
         userMCQ.setState(pObject.getString("state"));
         userMCQ.setTimeSpent((Integer) pObject.getNumber("timeSpent"));
         userMCQ.setScore(pObject.getString("score"));

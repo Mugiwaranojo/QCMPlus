@@ -6,8 +6,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
@@ -15,7 +13,7 @@ import mydevmind.com.qcmplusstudent.model.User;
 
 
 /**
- * Created by Joan on 29/07/2014.
+ * DAO du Model User
  */
 public class UserDAO implements IDAO<User> {
 
@@ -92,20 +90,6 @@ public class UserDAO implements IDAO<User> {
                 }else{
                     listener.onApiResultListener(null, e);
                 }
-            }
-        });
-    }
-
-    public void fetchAllUser(final IAPIServiceResultListener<ArrayList<User>> listener){
-        final ArrayList<User> userArrayList= new ArrayList<User>();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                for (ParseObject pUser: parseObjects){
-                    userArrayList.add(parseObjectToUser(pUser));
-                }
-                listener.onApiResultListener(userArrayList, e);
             }
         });
     }

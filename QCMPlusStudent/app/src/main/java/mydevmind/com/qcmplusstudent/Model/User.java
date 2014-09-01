@@ -108,31 +108,4 @@ public class User implements Serializable {
     public String toString() {
         return firstname + " " + lastname;
     }
-
-    public static User getDefaultUser () {
-
-        User u = new User();
-        u.setFirstname("Firstname");
-        u.setLastname("Lastname");
-        u.setCompany("TCS Alti");
-
-        return u;
-    }
-
-    public static ArrayList<User> getAllUsers (int size) {
-
-        ArrayList<User> list = new ArrayList<User>();
-
-        for (int i = 0; i < size; i++) {
-
-            User u = new User();
-            u.setFirstname("Firstname" + (i + 1));
-            u.setLastname("Lastname" + (i + 1));
-            u.setCompany("TCS Alti");
-
-            list.add(u);
-        }
-
-        return list;
-    }
 }

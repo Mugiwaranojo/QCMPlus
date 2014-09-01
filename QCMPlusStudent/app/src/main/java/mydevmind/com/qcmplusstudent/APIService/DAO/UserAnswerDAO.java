@@ -14,7 +14,7 @@ import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
 /**
- * Created by Joan on 31/07/2014.
+ * DAO du Model UserAnswer
  */
 public class UserAnswerDAO implements IDAO<UserAnswer>{
 
@@ -77,25 +77,6 @@ public class UserAnswerDAO implements IDAO<UserAnswer>{
                 listener.onApiResultListener(userAnswers, e);
             }
         });
-    }
-
-    public ArrayList<UserAnswer> findByUserMCQ(UserMCQ userMCQ){
-        ArrayList<UserAnswer> userAnswers= new ArrayList<UserAnswer>();
-        ParseObject pUserMCQ = ParseObject.createWithoutData("UserMCQ", userMCQ.getObjectId());
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserAnswer");
-        query.whereEqualTo("userMCQ", pUserMCQ);
-        query.include("Question");
-        query.include("Option");
-        try {
-            List<ParseObject> results= query.find();
-            for (ParseObject pObj: results){
-                userAnswers.add(parseObjectToUserAnswer(pObj));
-            }
-            return userAnswers;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public UserAnswer parseObjectToUserAnswer(ParseObject pObj) {

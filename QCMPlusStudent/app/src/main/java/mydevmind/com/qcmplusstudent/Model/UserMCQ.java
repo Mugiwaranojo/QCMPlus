@@ -32,10 +32,6 @@ public class UserMCQ implements Serializable{
         return objectId;
     }
 
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
-    }
-
     public String getState() {
         return state;
     }
