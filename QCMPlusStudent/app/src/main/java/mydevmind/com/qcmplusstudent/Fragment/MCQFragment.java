@@ -1,19 +1,26 @@
 package mydevmind.com.qcmplusstudent.fragment;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Chronometer;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import mydevmind.com.qcmplusstudent.MainActivity;
 import mydevmind.com.qcmplusstudent.R;
@@ -55,6 +62,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     private Button buttonNext;
     private Button buttonSaveMCQ;
     private TextView textViewNbrQuestion;
+    private Chronometer chronometer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,6 +127,9 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
                         listener.onFragmentAction(MainActivity.ACTION_VIEW_MCQDONE, obj);
                     }
                 });
+                chronometer.stop();
+                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                userMCQ.setTimeSpent(safeLongToInt(elapsedMillis/1000));
                 manager.saveUserMCQ(userMCQ);
                 spinner.show();
             }
@@ -127,6 +138,8 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
 
         scrollView= (ScrollView) v.findViewById(R.id.scrollViewMCQ);
         scrollView.setVisibility(View.INVISIBLE);
+
+        chronometer = (Chronometer) v.findViewById(R.id.chronometer);
         return v;
     }
 
@@ -202,6 +215,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
         currentMCQ.setQuestions(obj);
         userMCQ.getMcq().setQuestions(obj);
         loadQuestion();
+        chronometer.start();
     }
 
     @Override
@@ -226,5 +240,13 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
         for(CheckBox checkBox: checkboxOptions){
             checkBox.setChecked(false);
         }
+    }
+
+    public static int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
     }
 }

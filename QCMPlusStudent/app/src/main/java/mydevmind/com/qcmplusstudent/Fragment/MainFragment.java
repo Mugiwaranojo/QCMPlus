@@ -68,17 +68,6 @@ public class MainFragment extends Fragment implements IAPIServiceResultListener<
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        selectAllMCQ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onFragmentAction(MainActivity.ACTION_VIEW_ALLMCQ, null);
-            }
-        });
-    }
-
-    @Override
     public void onApiResultListener(final ArrayList<UserMCQ> userMCQArrayList, ParseException e) {
         spinner.dismiss();
         UserListUserMCQAdapter adapter = new UserListUserMCQAdapter(getActivity(), userMCQArrayList);

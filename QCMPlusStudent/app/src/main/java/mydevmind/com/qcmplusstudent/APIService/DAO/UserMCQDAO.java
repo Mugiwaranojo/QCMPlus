@@ -34,7 +34,6 @@ public class UserMCQDAO implements IDAO<UserMCQ> {
     @Override
     public void save(final UserMCQ obj, final IAPIServiceResultListener<UserMCQ> listener) {
         obj.setState(UserMCQ.State.DONE.toString());
-        obj.setTimeSpent(30);
         ParseObject pUser = ParseObject.createWithoutData("User", obj.getUser().getObjectId());
         ParseObject pMCQ = ParseObject.createWithoutData("MCQ", obj.getMcq().getObjectId());
         final ParseObject userMCQ =  new ParseObject("UserMCQ");

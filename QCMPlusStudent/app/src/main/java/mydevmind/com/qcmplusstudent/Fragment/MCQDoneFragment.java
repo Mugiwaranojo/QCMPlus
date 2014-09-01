@@ -2,16 +2,21 @@ package mydevmind.com.qcmplusstudent.fragment;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import mydevmind.com.qcmplusstudent.R;
 import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
@@ -48,7 +53,16 @@ public class MCQDoneFragment extends Fragment{
         TextView textViewDate = (TextView) v.findViewById(R.id.textViewUserMCQDate);
         textViewDate.setText(userMCQ.getDateCreated().toLocaleString());
         TextView textViewTime = (TextView) v.findViewById(R.id.textViewUserMCQTimeSpent);
-        textViewTime.setText(userMCQ.getTimeSpent().toString());
+        Date date = new Date((long)(userMCQ.getTimeSpent()*1000));
+        String formattedDate = new SimpleDateFormat("mm:ss").format(date);
+        textViewTime.setText(formattedDate);
+
+        ImageView imageViewScore= (ImageView) v.findViewById(R.id.imageViewIconScore);
+        imageViewScore.setColorFilter(Color.parseColor("#4BC0C6"));
+        ImageView imageViewDate= (ImageView) v.findViewById(R.id.imageViewIconDate);
+        imageViewDate.setColorFilter(Color.parseColor("#4BC0C6"));
+        ImageView imageViewTime= (ImageView) v.findViewById(R.id.imageViewIconTimeSpent);
+        imageViewTime.setColorFilter(Color.parseColor("#4BC0C6"));
 
         listViewQuestions = (ExpandableListView) v.findViewById(R.id.expandableListView);
         if(userMCQ.getUserAnswers()!=null){
