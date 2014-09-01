@@ -1,6 +1,5 @@
 package mydevmind.com.qcmplusstudent.fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -21,7 +21,6 @@ import mydevmind.com.qcmplusstudent.apiService.IAPIServiceResultListener;
 import mydevmind.com.qcmplusstudent.apiService.MCQServiceManager;
 import mydevmind.com.qcmplusstudent.model.MCQ;
 import mydevmind.com.qcmplusstudent.model.Question;
-import mydevmind.com.qcmplusstudent.model.User;
 import mydevmind.com.qcmplusstudent.model.UserAnswer;
 import mydevmind.com.qcmplusstudent.model.UserMCQ;
 
@@ -53,7 +52,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     private IFragmentActionListener listener;
 
     private TextView textViewQuestionStatement;
-    private RadioButton[] radioButtonsOptions;
+    private CheckBox[] checkboxOptions;
     private Button buttonPrevious;
     private Button buttonNext;
     private Button buttonSaveMCQ;
@@ -83,14 +82,14 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
         userMCQ.setUserAnswers(new ArrayList<UserAnswer>());
 
         textViewQuestionStatement= (TextView) v.findViewById(R.id.textViewQuestionStatement);
-        radioButtonsOptions= new RadioButton[5];
-        radioButtonsOptions[0]= (RadioButton) v.findViewById(R.id.radioButtonOption1);
-        radioButtonsOptions[1]= (RadioButton) v.findViewById(R.id.radioButtonOption2);
-        radioButtonsOptions[2]= (RadioButton) v.findViewById(R.id.radioButtonOption3);
-        radioButtonsOptions[3]= (RadioButton) v.findViewById(R.id.radioButtonOption4);
-        radioButtonsOptions[4]= (RadioButton) v.findViewById(R.id.radioButtonOption5);
+        checkboxOptions = new CheckBox[5];
+        checkboxOptions[0]= (CheckBox) v.findViewById(R.id.checkBoxOption1);
+        checkboxOptions[1]= (CheckBox) v.findViewById(R.id.checkBoxOption2);
+        checkboxOptions[2]= (CheckBox) v.findViewById(R.id.checkBoxOption3);
+        checkboxOptions[3]= (CheckBox) v.findViewById(R.id.checkBoxOption4);
+        checkboxOptions[4]= (CheckBox) v.findViewById(R.id.checkBoxOption5);
         for(int i=0; i<5;i++){
-            radioButtonsOptions[i].setOnClickListener(this);
+            checkboxOptions[i].setOnClickListener(this);
         }
 
         buttonNext= (Button) v.findViewById(R.id.buttonNextQuestion);
@@ -134,7 +133,7 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     private void saveUserAnswer() {
         int reponseFind=-1;
         for(int i=0; i<5; i++){
-            if(radioButtonsOptions[i].isChecked()){
+            if(checkboxOptions[i].isChecked()){
                 reponseFind=i;
             }
         }
@@ -160,9 +159,9 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
         Question question= currentMCQ.getQuestions().get(currentQuestionID);
         for(UserAnswer userAnswer: userMCQ.getUserAnswers()){
             if(userAnswer.getQuestion().getObjectId().equals(question.getObjectId())){
-                for(RadioButton radioButton: radioButtonsOptions){
-                    if(radioButton.getText().toString().equals(userAnswer.getAnswer().getStatement())){
-                        radioButton.setChecked(true);
+                for(CheckBox checkBox: checkboxOptions){
+                    if(checkBox.getText().toString().equals(userAnswer.getAnswer().getStatement())){
+                        checkBox.setChecked(true);
                     }
                 }
             }
@@ -174,9 +173,9 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
         textViewQuestionStatement.setText(question.getStatement());
         for(int i=0; i<5; i++){
             if(i<question.getOptions().size()){
-                radioButtonsOptions[i].setText(question.getOptions().get(i).getStatement());
+                checkboxOptions[i].setText(question.getOptions().get(i).getStatement());
             }else{
-                radioButtonsOptions[i].setVisibility(View.INVISIBLE);
+                checkboxOptions[i].setVisibility(View.INVISIBLE);
             }
         }
         if(currentQuestionID==0){
@@ -210,13 +209,13 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
 
     @Override
     public void onClick(View view) {
-        if(view instanceof RadioButton){
-            RadioButton selected= (RadioButton) view;
-            for(RadioButton radioButton: radioButtonsOptions){
-                if(selected.equals(radioButton)){
-                    radioButton.setChecked(true);
+        if(view instanceof CheckBox){
+            CheckBox selected= (CheckBox) view;
+            for(CheckBox checkBox: checkboxOptions){
+                if(selected.equals(checkBox)){
+                    checkBox.setChecked(true);
                 }else{
-                    radioButton.setChecked(false);
+                    checkBox.setChecked(false);
                 }
             }
             saveUserAnswer();
@@ -227,8 +226,8 @@ public class MCQFragment extends Fragment implements IAPIServiceResultListener<A
     }
 
     private void uncheckedAllOptions(){
-        for(RadioButton radioButton: radioButtonsOptions){
-            radioButton.setChecked(false);
+        for(CheckBox checkBox: checkboxOptions){
+            checkBox.setChecked(false);
         }
     }
 }
